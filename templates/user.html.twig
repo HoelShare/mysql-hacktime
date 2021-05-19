@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hacktime {% if user is defined %} - {{ user }} {% endif %}{% endblock %}
+
+{% block body %}
+    Current Level {{ level|default(0) }}
+    <a href="https://mysql.hacktime.de/" target="_blank">Login to PhpMyAdmin</a>
+    <form action="{{ path('checkLevel', {'user': user}) }}" method="post">
+        <button type="submit">Check Level</button>
+    </form>
+{% endblock %}

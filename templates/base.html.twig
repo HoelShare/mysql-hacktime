@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+    {% block stylesheets %}
+        <link href="{{ asset('style.css') }}" type="text/css" rel="stylesheet"/>
+    {% endblock %}
+
+    {% block javascripts %}
+    {% endblock %}
+</head>
+<body>
+{% block messages %}
+    {% if errorMessage is defined %}
+        {% block errorMessage %}
+            <div class="message message-error">
+                {{ errorMessage }}
+            </div>
+        {% endblock %}
+    {% endif %}
+    {% if successMessage is defined %}
+        {% block successMessage %}
+            <div class="message message-success">
+                {{ successMessage }}
+            </div>
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+{% endblock %}
+</body>
+</html>

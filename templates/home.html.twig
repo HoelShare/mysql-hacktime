@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hacktime{% endblock %}
+
+{% block body %}
+    <form action="{{ path('createUser') }}" method="post">
+        <input type="text" name="username">
+        <button type="submit">Create</button>
+    </form>
+{% endblock %}
