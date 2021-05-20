@@ -28,6 +28,19 @@
             </div>
         {% endblock %}
     {% endif %}
+    {% if hintMessage is defined %}
+        {% block hintMessage %}
+            <div class="message message-hint">
+                {{ hintMessage }}
+            </div>
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+
+{% block leaderboard %}
+    {% if user is defined %}
+        {{ board.render(user)|raw }}
+    {% endif %}
 {% endblock %}
 
 {% block body %}

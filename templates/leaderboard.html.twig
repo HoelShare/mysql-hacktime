@@ -1,0 +1,5 @@
+<ul>
+    {% for row in leaderBoard %}
+        <li>{{ row.rank }}: {{ row.level }} - {{ row.user }} {% if row.user == user %}(You){% endif %}</li>
+    {% endfor %}
+</ul>

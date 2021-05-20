@@ -7,7 +7,7 @@ namespace App\Service;
 use App\Exception\UserNotFoundException;
 use Doctrine\DBAL\Connection;
 
-class CheckerService
+class LevelService
 {
     public function __construct(
         private Connection $connection,
