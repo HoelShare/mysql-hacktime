@@ -47,10 +47,14 @@ SQL
         return 'Task: Insert a new Level record with number = 1';
     }
 
-    public function validate(Connection $connection): bool
+    public function validate(Connection $connection): ?string
     {
         $countRows = (int)$connection->fetchOne('SELECT count(number) from level where number = 1');
 
-        return ($countRows === 1);
+        if ($countRows !== 1) {
+            return 'Try using an INSERT INTO level [...] command';
+        }
+
+        return null;
     }
 }

@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CheckController extends AbstractController
 {
+    private const TRY_THRESHOLD = 3;
+
     public function __construct(
         private LevelService $checkerService,
     ) {
@@ -29,10 +31,15 @@ class CheckController extends AbstractController
         $currentLevel = $this->checkerService->getCurrentLevel($user);
         $params['level'] = $currentLevel;
 
-        if ($check) {
+        if ($check === null) {
             $params['successMessage'] = 'Level completed!';
         } else {
-            $params['errorMessage'] = 'Level not yet achived';
+            $try = $this->checkerService->getLevelTry($user, $currentLevel);
+            if ($try < self::TRY_THRESHOLD) {
+                $params['errorMessage'] = 'Level not yet achived';
+            } else {
+                $params['hintMessage'] = $check;
+            }
         }
         return $this->render('user.html.twig', $params);
     }

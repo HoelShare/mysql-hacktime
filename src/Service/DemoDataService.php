@@ -28,7 +28,7 @@ class DemoDataService
         $this->insertLevelDescription($connection, $level, $demoDataService->getDescription());
     }
 
-    public function checkLevel(string $username, int $level): bool
+    public function checkLevel(string $username, int $level): ?string
     {
         $demoDataService = $this->getLevel($level);
         $connection = $this->connectionFactory->createForUser($username);

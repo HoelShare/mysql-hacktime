@@ -15,13 +15,13 @@ class LevelService
     ) {
     }
 
-    public function checkMax(string $username): bool
+    public function checkMax(string $username): ?string
     {
         $currentLevel = $this->getCurrentLevel($username);
 
         $success = $this->demoDataService->checkLevel($username, $currentLevel);
 
-        $this->logTry($username, $currentLevel, $success);
+        $this->logTry($username, $currentLevel, $success === null);
 
         return $success;
     }
@@ -61,5 +61,19 @@ SQL
             ,
             ['number' => $currentLevel, 'user' => $username, 'success' => (int)$success]
         );
+    }
+
+    public function getLevelTry(string $user, int $currentLevel): int
+    {
+        $try = $this->connection->fetchOne(
+            'SELECT count(*) FROM solution_try WHERE number = :level and user = :user',
+            ['level' => $currentLevel, 'user' => $user]
+        );
+
+        if ($try === false) {
+            return 0;
+        }
+
+        return (int)$try;
     }
 }
