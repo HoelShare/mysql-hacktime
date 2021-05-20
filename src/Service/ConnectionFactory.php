@@ -19,7 +19,7 @@ class ConnectionFactory
     private function getPassword(string $username): string
     {
         $password = $this->connection->fetchOne(
-            'SELECT password FROM settings.users where username = :username',
+            'SELECT password FROM settings.user where username = :username',
             ['username' => $username]
         );
         if ($password === false) {

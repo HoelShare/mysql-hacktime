@@ -15,7 +15,7 @@ final class Version20210519171441 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->connection->executeQuery(<<<'SQL'
-        CREATE TABLE `settings`.`users` (
+        CREATE TABLE `settings`.`user` (
           `id` INT NOT NULL AUTO_INCREMENT,
           `username` VARCHAR(45) NOT NULL,
           `password` VARCHAR(45) NOT NULL,

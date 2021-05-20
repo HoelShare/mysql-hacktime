@@ -27,7 +27,7 @@ class LevelService
     private function checkUserExists(string $username): void
     {
         $user = $this->connection->fetchOne(
-            'SELECT * FROM settings.users where username = :username',
+            'SELECT * FROM settings.user where username = :username',
             ['username' => $username]
         );
 

@@ -35,7 +35,7 @@ class DemoDataService
 
         $success = $demoDataService->validate($connection, $username);
 
-        if ($success) {
+        if ($success === null) {
             $demoDataService->cleanUp($connection);
             try {
                 $this->createDemoData($username, $level + 1);
@@ -62,7 +62,7 @@ class DemoDataService
     {
         $connection->executeQuery(
             <<<'SQL'
-            INSERT INTO level (number, description) VALUES (:level, :description)
+            REPLACE INTO level (number, description) VALUES (:level, :description)
 SQL
             ,
             ['level' => $level, 'description' => $description]
@@ -73,7 +73,10 @@ SQL
     {
         $connection = $this->connectionFactory->createForUser($user);
         $demoData = $this->getLevel($level);
-        $demoData->reset($connection);
+        try {
+            $demoData->reset($connection);
+        } catch (\Exception $exception) {
+        }
         if ($level > 0) {
             $connection->executeQuery('DELETE FROM level where number = :level', ['level' => $level]);
         }

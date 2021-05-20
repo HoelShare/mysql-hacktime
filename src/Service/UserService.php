@@ -40,7 +40,7 @@ class UserService
             GRANT USAGE ON *.* TO '%s'@'%s';
             CREATE DATABASE IF NOT EXISTS `%s`;
             GRANT ALL PRIVILEGES ON `%s`.* TO '%s'@'%s';
-            INSERT INTO settings.users (username, password) VALUES (:username, :password);
+            INSERT INTO settings.user (username, password) VALUES (:username, :password);
 SQL
                 ,
                 $name,
@@ -76,7 +76,7 @@ SQL
         }
 
         $user = $this->connection->fetchAssociative(
-            'SELECT * FROM settings.users where username = :username',
+            'SELECT * FROM settings.user where username = :username',
             ['username' => $userName]
         );
 
@@ -100,7 +100,7 @@ SQL
     public function isValid(string $user, mixed $password): bool
     {
         $result = $this->connection->fetchOne(
-            'SELECT 1 FROM users where username = :user AND password = :password',
+            'SELECT 1 FROM user where username = :user AND password = :password',
             ['user' => $user, 'password' => $password]
         );
 
