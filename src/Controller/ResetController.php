@@ -30,7 +30,15 @@ class ResetController extends AbstractController
         $isValid = $this->userService->isValid($user, $password);
 
         if (!$isValid) {
-            return $this->redirectToRoute('home', ['errorMessage' => 'Invalid Password, create new instance']);
+            $level = $this->levelService->getCurrentLevel($user);
+            return $this->redirectToRoute(
+                'renderLevel',
+                [
+                    'user' => $user,
+                    'level' => $level,
+                    'errorMessage' => 'Invalid Password, instance not reverted',
+                ]
+            );
         }
 
         $this->userService->looseLevels($user);

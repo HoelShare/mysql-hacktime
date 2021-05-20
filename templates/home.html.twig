@@ -2,9 +2,21 @@
 
 {% block title %}Hacktime{% endblock %}
 
-{% block body %}
+{% block heading %}
+    <h1>SQL-Game-Challenge</h1>
+
+    {% if joke is defined %}
+        <p>{{ joke.joke }}</p>
+        <p>{{ joke.punchline }}</p>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h2>Create Instance</h2>
+    <p>Select a name, create the instance and start gaming</p>
+    <p>Important save the generated password!</p>
     <form action="{{ path('createUser') }}" method="post">
-        <input type="text" name="username">
-        <button type="submit">Create</button>
+        <input class="text-input" type="text" placeholder="name" name="username">
+        <button class="button" type="submit">Create</button>
     </form>
 {% endblock %}

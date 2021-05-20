@@ -60,6 +60,6 @@ class CheckController extends AbstractController
             );
         }
 
-        return $this->render('user.html.twig', $params);
+        return $this->render('user.html.twig', array_merge($request->query->all(), $params));
     }
 }

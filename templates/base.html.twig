@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
@@ -13,37 +13,32 @@
     {% endblock %}
 </head>
 <body>
-{% block messages %}
-    {% if errorMessage is defined and errorMessage != '' %}
-        {% block errorMessage %}
-            <div class="message message-error">
-                {{ errorMessage }}
-            </div>
-        {% endblock %}
-    {% endif %}
-    {% if successMessage is defined %}
-        {% block successMessage %}
-            <div class="message message-success">
-                {{ successMessage }}
-            </div>
-        {% endblock %}
-    {% endif %}
-    {% if hintMessage is defined %}
-        {% block hintMessage %}
-            <div class="message message-hint">
-                {{ hintMessage }}
-            </div>
-        {% endblock %}
-    {% endif %}
-{% endblock %}
+<div class="wrapper">
+    {% block body %}
+        <div class="content-wrapper">
+            {% block heading %}
+            {% endblock %}
 
-{% block leaderboard %}
-    {% if user is defined %}
-        {{ board.render(user)|raw }}
-    {% endif %}
-{% endblock %}
+            {% block messages %}
+                {% include 'messages.html.twig' %}
+            {% endblock %}
 
-{% block body %}
-{% endblock %}
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        {% if user is defined %}
+            <div class="sidebar-wrapper">
+                <div class="sidebar">
+                    {% block sidebar %}
+                        {% block leaderboard %}
+                            {{ board.render(user)|raw }}
+                        {% endblock %}
+                    {% endblock %}
+                </div>
+            </div>
+        {% endif %}
+    {% endblock %}
+</div>
 </body>
 </html>

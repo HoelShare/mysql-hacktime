@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\JokeService;
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,6 +16,7 @@ class UserController extends AbstractController
 {
     public function __construct(
         private UserService $userService,
+        private JokeService $jokeService,
     ) {
     }
 
@@ -34,7 +36,8 @@ class UserController extends AbstractController
      */
     public function index(Request $request): Response
     {
+        $joke = $this->jokeService->getRandom();
         $errorMessage = $request->query->get('errorMessage');
-        return $this->render('home.html.twig', ['errorMessage' => $errorMessage]);
+        return $this->render('home.html.twig', ['errorMessage' => $errorMessage, 'joke' => $joke]);
     }
 }

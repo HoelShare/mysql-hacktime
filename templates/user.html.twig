@@ -2,23 +2,37 @@
 
 {% block title %}Hacktime {% if user is defined %} - {{ user }} {% endif %}{% endblock %}
 
-{% block body %}
+{% block heading %}
     <h1>Current Level {{ level|default(0) }}</h1>
     <form action="{{ path('checkLevel', {'user': user}) }}" method="post">
-        <button type="submit">Check Level</button>
+        <button class="button" type="submit">Check Level</button>
     </form>
+{% endblock %}
 
-    <form action="{{ path('resetInstance', {'user': user}) }}" method="post">
-        <label>
-            Password:
-            <input name="password" type="password">
-        </label>
-        <button type="submit">Reset Instance!</button>
-    </form>
-
-    <form action="{{ path('resetLevel', {'user': user}) }}" method="post">
-        <button type="submit">Reset Level!</button>
-    </form>
-
+{% block content %}
     {% include 'level/level' ~ level|default(0) ~ '.html.twig' ignore missing %}
+{% endblock %}
+
+{% block sidebar %}
+    {{ parent() }}
+
+    <div class="reset-wrapper">
+        <fieldset class="reset-level">
+            <legend>Reset Level</legend>
+            <form action="{{ path('resetLevel', {'user': user}) }}" method="post">
+                <button class="button button-warn" type="submit">Reset Level!</button>
+            </form>
+        </fieldset>
+
+        <fieldset class="reset-instance">
+            <legend>Reset Instance</legend>
+            <form action="{{ path('resetInstance', {'user': user}) }}" method="post">
+                <label>
+                    Password:
+                    <input class="text-input" name="password" type="password">
+                </label>
+                <button class="button button-danger" type="submit">Reset Instance!</button>
+            </form>
+        </fieldset>
+    </div>
 {% endblock %}

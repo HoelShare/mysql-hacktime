@@ -28,9 +28,9 @@ class LeaderBoardService
     {
         return $this->connection->fetchAllAssociative(
             <<<'SQL'
-SELECT IF(`level` <= :userLevel, `level`, '?') as `level`, `user`, `rank` 
+SELECT IF(`level` <= :userLevel, `level`, null) as `level`, `user`, `rank` 
 FROM (SELECT 
-    MAX(number) AS `level`, user, row_number() over (order by max(number) desc) as `rank`
+    MAX(number) AS `level`, user, row_number() over (order by max(number) desc, min(created_at) asc) as `rank`
 FROM
     solution_try
 WHERE
