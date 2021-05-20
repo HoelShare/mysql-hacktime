@@ -23,6 +23,13 @@ class UserService
         $this->checkUserExists($userName);
         $password = $this->randomPassword();
 
+        $this->createInstance($userName, $password);
+
+        return $password;
+    }
+
+    public function createInstance(string $name, string $password): void
+    {
         $host = '%';
         $this->connection->executeQuery(
             sprintf(
@@ -36,24 +43,22 @@ class UserService
             INSERT INTO settings.users (username, password) VALUES (:username, :password);
 SQL
                 ,
-                $userName,
-                $userName,
-                $userName,
+                $name,
+                $name,
+                $name,
                 $host,
                 $password,
-                $userName,
+                $name,
                 $host,
-                $userName,
-                $userName,
-                $userName,
+                $name,
+                $name,
+                $name,
                 $host
             ),
-            ['username' => $userName, 'password' => $password,]
+            ['username' => $name, 'password' => $password,]
         );
 
-        $this->demoDataService->createDemoData($userName, 0);
-
-        return $password;
+        $this->demoDataService->createDemoData($name, 0);
     }
 
     private function checkUserExists(string $userName): void
@@ -90,5 +95,26 @@ SQL
             $pass[] = $alphabet[$n];
         }
         return implode($pass); //turn the array into a string
+    }
+
+    public function isValid(string $user, mixed $password): bool
+    {
+        $result = $this->connection->fetchOne(
+            'SELECT 1 FROM users where username = :user AND password = :password',
+            ['user' => $user, 'password' => $password]
+        );
+
+        return $result !== false;
+    }
+
+    public function looseLevels(string $user): void
+    {
+        $this->connection->executeQuery(
+            <<<'SQL'
+            UPDATE solution_try SET success = 0 WHERE user = :user
+SQL
+            ,
+            ['user' => $user],
+        );
     }
 }

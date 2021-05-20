@@ -32,8 +32,9 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="home", methods={"GET"})
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        return $this->render('home.html.twig');
+        $errorMessage = $request->query->get('errorMessage');
+        return $this->render('home.html.twig', ['errorMessage' => $errorMessage]);
     }
 }

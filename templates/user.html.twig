@@ -8,5 +8,13 @@
         <button type="submit">Check Level</button>
     </form>
 
+    <form action="{{ path('resetInstance', {'user': user}) }}" method="post">
+        <label>
+            Password:
+            <input name="password" type="password">
+        </label>
+        <button type="submit">Reset Instance!</button>
+    </form>
+
     {% include 'level/level' ~ level|default(0) ~ '.html.twig' ignore missing %}
 {% endblock %}
