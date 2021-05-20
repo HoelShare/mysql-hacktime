@@ -16,5 +16,9 @@
         <button type="submit">Reset Instance!</button>
     </form>
 
+    <form action="{{ path('resetLevel', {'user': user}) }}" method="post">
+        <button type="submit">Reset Level!</button>
+    </form>
+
     {% include 'level/level' ~ level|default(0) ~ '.html.twig' ignore missing %}
 {% endblock %}

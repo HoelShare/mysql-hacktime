@@ -21,6 +21,14 @@ SQL
         );
     }
 
+    public function reset(Connection $connection): void
+    {
+        $connection->executeQuery(<<<'SQL'
+            DROP TABLE IF EXISTS level;
+SQL
+        );
+    }
+
     public function cleanUp(Connection $connection): void
     {
         $connection->executeQuery(<<<'SQL'

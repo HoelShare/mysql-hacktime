@@ -33,4 +33,9 @@ class Level1UpdateSet implements DemoDataInterface
 
         return ($countRows === 1);
     }
+
+    public function reset(Connection $connection): void
+    {
+        // nth
+    }
 }

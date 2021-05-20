@@ -1,8 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\DemoDataService;
+use App\Service\LevelService;
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +16,8 @@ class ResetController extends AbstractController
 {
     public function __construct(
         private UserService $userService,
+        private LevelService $levelService,
+        private DemoDataService $demoDataService,
     ) {
     }
 
@@ -32,5 +37,19 @@ class ResetController extends AbstractController
         $this->userService->createInstance($user, $password);
 
         return $this->redirectToRoute('renderLevel', ['user' => $user, 'password' => $password]);
+    }
+
+    /**
+     * @Route("/reset/{user}/level", name="resetLevel", methods={"POST"})
+     */
+    public function resetLevel(string $user): Response
+    {
+        $level = $this->levelService->getCurrentLevel($user);
+        $this->demoDataService->resetLevel($user, $level);
+
+        return $this->render(
+            'user.html.twig',
+            ['user' => $user, 'level' => $level, 'successMessage' => 'Level reverted']
+        );
     }
 }

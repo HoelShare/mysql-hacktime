@@ -69,5 +69,14 @@ SQL
         );
     }
 
-
+    public function resetLevel(string $user, int $level): void
+    {
+        $connection = $this->connectionFactory->createForUser($user);
+        $demoData = $this->getLevel($level);
+        $demoData->reset($connection);
+        if ($level > 0) {
+            $connection->executeQuery('DELETE FROM level where number = :level', ['level' => $level]);
+        }
+        $this->createDemoData($user, $level);
+    }
 }
