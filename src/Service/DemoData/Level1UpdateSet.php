@@ -27,7 +27,7 @@ class Level1UpdateSet implements DemoDataInterface
         return 'Task: Set anything to the solution column';
     }
 
-    public function validate(Connection $connection): ?string
+    public function validate(Connection $connection, string $username): ?string
     {
         $countRows = (int)$connection->fetchOne('SELECT count(number) from level where number = 1 and solution is not null');
 

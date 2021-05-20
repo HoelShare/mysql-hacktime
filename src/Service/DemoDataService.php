@@ -33,7 +33,7 @@ class DemoDataService
         $demoDataService = $this->getLevel($level);
         $connection = $this->connectionFactory->createForUser($username);
 
-        $success = $demoDataService->validate($connection);
+        $success = $demoDataService->validate($connection, $username);
 
         if ($success) {
             $demoDataService->cleanUp($connection);

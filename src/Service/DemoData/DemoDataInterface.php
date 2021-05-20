@@ -14,7 +14,7 @@ interface DemoDataInterface
 
     public function getDescription(): string;
 
-    public function validate(Connection $connection): ?string;
+    public function validate(Connection $connection, string $username): ?string;
 
     public function reset(Connection $connection): void;
 }
