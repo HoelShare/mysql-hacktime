@@ -21,7 +21,7 @@ class Level12CountNullTest extends KernelTestCase
     {
         $this->connection->executeQuery(
             sprintf(
-                'UPDATE %s.level set solution = (select count(0) from %s.order inner join %s.order_address on order_address.order_id = order.id where salutation is null) - 5 where number = 12',
+                'UPDATE %s.level set solution = (select count(0) from %s.order inner join %s.order_address on order_address.order_id = order.id and order_address.tenant_id = order.tenant_id where salutation is null) - 5 where number = 12',
                 self::TEST_USER,
                 self::TEST_USER,
                 self::TEST_USER
@@ -36,7 +36,7 @@ class Level12CountNullTest extends KernelTestCase
     {
         $this->connection->executeQuery(
             sprintf(
-                'UPDATE %s.level set solution = (select count(0) from %s.order inner join %s.order_address on order_address.order_id = order.id where salutation is null) + 5 where number = 12',
+                'UPDATE %s.level set solution = (select count(0) from %s.order inner join %s.order_address on order_address.order_id = order.id and order_address.tenant_id = order.tenant_id where salutation is null) + 5 where number = 12',
                 self::TEST_USER,
                 self::TEST_USER,
                 self::TEST_USER
@@ -44,14 +44,14 @@ class Level12CountNullTest extends KernelTestCase
         );
 
         $error = $this->levelService->checkMax(self::TEST_USER);
-        static::assertSame('Wrong, you counted too much!', $error);
+        static::assertSame('Wrong, you counted too much! The orders are multi tenant, so remember joining the tenant_id', $error);
     }
 
     public function testLevel12Success(): void
     {
         $this->connection->executeQuery(
             sprintf(
-                'UPDATE %s.level set solution = (select count(0) from %s.order inner join %s.order_address on order_address.order_id = order.id where salutation is null) where number = 12',
+                'UPDATE %s.level set solution = (select count(0) from %s.order inner join %s.order_address on order_address.order_id = order.id and order_address.tenant_id = order.tenant_id where salutation is null) where number = 12',
                 self::TEST_USER,
                 self::TEST_USER,
                 self::TEST_USER

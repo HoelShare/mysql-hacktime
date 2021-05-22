@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service\DemoData;
@@ -32,14 +33,20 @@ class Level12CountIsNull implements DemoDataInterface
             ['number' => $this->getLevel()]
         );
 
-        if ($solution === false ||$solution === null || $solution === '') {
+        if ($solution === false || $solution === null || $solution === '') {
             return 'Nothing set to the solution column! Try counting the orders & update the solution.';
         }
 
-        $result = (int)$connection->fetchOne('SELECT count(0) from `order` inner join order_address on order_address.order_id = order.id where salutation is null');
+        $result = (int)$connection->fetchOne(
+            'SELECT count(0) from `order` 
+        inner join order_address on 
+            order_address.order_id = order.id 
+                and order_address.tenant_id = order.tenant_id 
+        where salutation is null'
+        );
 
         if ($result < (int)$solution) {
-            return 'Wrong, you counted too much!';
+            return 'Wrong, you counted too much! The orders are multi tenant, so remember joining the tenant_id';
         }
         if ($result > (int)$solution) {
             return 'Wrong, you counted too less!';

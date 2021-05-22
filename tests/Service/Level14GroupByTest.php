@@ -46,7 +46,7 @@ SQL
         $this->assertView();
     }
 
-    public function testLevel13WrongColumns(): void
+    public function testLevel14WrongColumns(): void
     {
         $this->connection->executeQuery(
             sprintf(
