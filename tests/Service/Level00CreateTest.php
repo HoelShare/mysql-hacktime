@@ -6,7 +6,7 @@ namespace App\Tests\Service;
 
 use App\Service\UserService;
 
-class Level0CreateTest extends KernelTestCase
+class Level00CreateTest extends KernelTestCase
 {
     private UserService $userService;
 

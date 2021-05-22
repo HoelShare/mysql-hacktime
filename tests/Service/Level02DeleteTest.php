@@ -2,7 +2,7 @@
 
 namespace App\Tests\Service;
 
-class Level2DeleteTest extends KernelTestCase
+class Level02DeleteTest extends KernelTestCase
 {
     public function testLevel2ErrorPartDeleted(): void
     {

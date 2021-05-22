@@ -7,7 +7,7 @@ namespace App\Tests\Service;
 use App\Constants\Level5;
 use Doctrine\DBAL\Exception\DriverException;
 
-class Level5CreateViewTest extends KernelTestCase
+class Level05CreateViewTest extends KernelTestCase
 {
     /**
      * @after

@@ -9,7 +9,7 @@ use App\Constants\Level6;
 use App\Service\DemoData\Level6ReCreateView;
 use Doctrine\DBAL\Exception\DriverException;
 
-class Level6ReCreateViewTest extends KernelTestCase
+class Level06ReCreateViewTest extends KernelTestCase
 {
     /**
      * @after

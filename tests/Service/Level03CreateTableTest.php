@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Service;
 
-class Level3CreateTableTest extends KernelTestCase
+class Level03CreateTableTest extends KernelTestCase
 {
     /**
      * @before

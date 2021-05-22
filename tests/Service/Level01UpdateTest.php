@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Service;
 
-class Level1UpdateTest extends KernelTestCase
+class Level01UpdateTest extends KernelTestCase
 {
     public function testLevel1Succeed(): void
     {
