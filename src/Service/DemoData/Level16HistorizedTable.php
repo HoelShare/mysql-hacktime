@@ -94,8 +94,11 @@ SQL
 
     public function getDescription(): string
     {
-        return 'The company data is stored historically in the database, but for reporting we only need the current companies (current_flag = 1), and we should exclude all companies that have ever been a test company (test = 1).
-        For this use case a view (%s) was created, but id had some issues in filtering, please fix them.';
+        return sprintf(
+            'The company data is stored historically in the database, but for reporting we only need the current companies (current_flag = 1), and we should exclude all companies that have ever been a test company (test = 1).
+        For this use case a view (%s) was created, but id had some issues in filtering, please fix them.',
+            Level16::EXPECTED_VIEW_NAME
+        );
     }
 
     public function validate(Connection $connection, string $username): ?string

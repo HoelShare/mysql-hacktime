@@ -16,7 +16,6 @@ class Level18DynamicUltimoTest extends KernelTestCase
      */
     public function cleanUp()
     {
-        static::markTestSkipped('Level 17 missing');
         try {
             $this->connection->executeQuery(
                 sprintf(
