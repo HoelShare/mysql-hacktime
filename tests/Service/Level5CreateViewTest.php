@@ -50,11 +50,7 @@ class Level5CreateViewTest extends KernelTestCase
             'CREATE VIEW ' . self::TEST_USER . '.' . Level5::EXPECTED_VIEW_NAME . ' AS SELECT id, name FROM ' . self::TEST_USER . '.level5'
         );
 
-        $error = $this->levelService->checkMax(self::TEST_USER);
-        static::assertSame(
-            'The result seems to be wrong, possible mistakes. The view contains invalid data or wrong column names.',
-            $error
-        );
+        $this->assertView();
     }
 
     public function testLevel5WrongColumns(): void
@@ -63,11 +59,7 @@ class Level5CreateViewTest extends KernelTestCase
             'CREATE VIEW ' . self::TEST_USER . '.' . Level5::EXPECTED_VIEW_NAME . ' AS SELECT id, name, test FROM ' . self::TEST_USER . '.level5 WHERE test = 0'
         );
 
-        $error = $this->levelService->checkMax(self::TEST_USER);
-        static::assertSame(
-            'The result seems to be wrong, possible mistakes. The view contains invalid data or wrong column names.',
-            $error
-        );
+        $this->assertView();
     }
 
 

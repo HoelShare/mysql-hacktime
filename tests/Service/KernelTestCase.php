@@ -50,4 +50,13 @@ class KernelTestCase extends SymfonyKernelTestCase
             static::assertInstanceOf(LevelNotFoundException::class, $exception);
         }
     }
+
+    protected function assertView(): void
+    {
+        $error = $this->levelService->checkMax(self::TEST_USER);
+        static::assertSame(
+            'The result seems to be wrong, possible mistakes. The view contains invalid data or wrong column names.',
+            $error
+        );
+    }
 }
