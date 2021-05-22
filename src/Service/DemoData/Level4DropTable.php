@@ -31,7 +31,6 @@ SQL
 
     public function cleanUp(Connection $connection): void
     {
-        $connection->executeQuery('DROP TABLE IF EXISTS level4');
     }
 
     public function getLevel(): int
@@ -66,6 +65,6 @@ SQL
 
     public function reset(Connection $connection): void
     {
-        $this->cleanUp($connection);
+        $connection->executeQuery('DROP TABLE IF EXISTS level4');
     }
 }

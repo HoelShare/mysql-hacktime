@@ -50,8 +50,6 @@ SQL
 
     public function cleanUp(Connection $connection): void
     {
-        $connection->executeQuery('DROP TABLE IF EXISTS ' . self::TABLE_NAME);
-        $connection->executeQuery('DROP VIEW IF EXISTS ' . Level6::EXPECTED_VIEW_NAME);
     }
 
     public function getLevel(): int
@@ -79,6 +77,7 @@ SQL
 
     public function reset(Connection $connection): void
     {
-        $this->cleanUp($connection);
+        $connection->executeQuery('DROP TABLE IF EXISTS ' . self::TABLE_NAME);
+        $connection->executeQuery('DROP VIEW IF EXISTS ' . Level6::EXPECTED_VIEW_NAME);
     }
 }
