@@ -146,9 +146,9 @@ SQL
                         'language' => $faker->languageCode(),
                         'currency_factor' => $faker->randomFloat(2, 0, 5),
                         'sales_channel_id' => $faker->randomNumber(5),
-                        'billing_address_id' => $faker->numberBetween(),
-                        'shipping_address_id' => $faker->numberBetween(),
-                        'order_date_time' => $faker->dateTime()->format(DATE_ATOM),
+                        'billing_address_id' => $faker->numberBetween(1, 4000),
+                        'shipping_address_id' => $faker->numberBetween(1, 4000),
+                        'order_date_time' => $faker->dateTime('-2 YEARS')->format(DATE_ATOM),
                         'amount_total' => $faker->randomFloat(2, 1, 1000),
                         'amount_net' => $faker->randomFloat(2, 1, 1000),
                         'shipping_total' => $faker->randomFloat(2, 1, 50),
@@ -251,7 +251,7 @@ remote_address
                         'last_name' => $faker->lastName(),
                         'title' => $faker->boolean(70) ? null : $faker->title(),
                         'company' => $faker->company(),
-                        'created_at' => $faker->dateTime()->format(DATE_ATOM),
+                        'created_at' => $faker->dateTime('-2 YEARS')->format(DATE_ATOM),
                         'remote_address' => $faker->ipv4(),
                     ]
                 );
