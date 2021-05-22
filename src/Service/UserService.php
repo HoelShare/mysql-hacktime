@@ -9,7 +9,7 @@ use Doctrine\DBAL\Connection;
 
 class UserService
 {
-    private const USERNAME_BLACKLIST = ['settings', 'root'];
+    private const USERNAME_BLACKLIST = ['settings', 'root', 'sys', 'user', 'order', 'information_schema'];
 
     public function __construct(
         private Connection $connection,
@@ -67,7 +67,7 @@ SQL
             throw new InvalidUsernameException(sprintf('Username (%s) too short', $userName));
         }
 
-        if (preg_match('/\\W/', $userName) !== 0) {
+        if (preg_match('/\\W|_/', $userName) !== 0) {
             throw new InvalidUsernameException(sprintf('Username (%s) contains invalid characters', $userName));
         }
 

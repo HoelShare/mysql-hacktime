@@ -67,7 +67,7 @@ create table order_customer (
     customer_id int not null,
     order_id int not null,
     email varchar(250) not null,
-    salutation varchar(250) not null,
+    salutation varchar(250) null,
     first_name varchar(250) not null,
     last_name varchar(250) not null,
     title varchar(50) null,
