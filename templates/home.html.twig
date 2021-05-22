@@ -16,7 +16,7 @@
 {% block content %}
     <h2>Create Instance</h2>
     <p>Select a name, create the instance and start gaming</p>
-    <p>Important save the generated password!</p>
+    <p><b>Important save the generated password!</b></p>
     <form action="{{ path('createUser') }}" method="post">
         <input class="text-input" type="text" placeholder="name" name="username">
         <button class="button" type="submit">Create</button>
@@ -26,4 +26,11 @@
     <p>In the first levels you will learn the basic concepts. In the further levels, mostly views have to be created so
         that the results can be compared.</p>
     <p>The further you get the harder the levels become!</p>
+    <p>Compared to other sites, here you have full database access (with all rights), even with your own tools!</p>
+
+    <h4>Other cool SQL-Tutorials</h4>
+    <ul>
+        <li><a href="http://mystery.knightlab.com/">SQL Murder Mystery</a></li>
+        <li><a href="https://sqlzoo.net/">SQL Zoo</a></li>
+    </ul>
 {% endblock %}

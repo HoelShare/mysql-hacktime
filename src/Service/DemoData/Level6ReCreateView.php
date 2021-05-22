@@ -62,7 +62,7 @@ SQL
     public function getDescription(): string
     {
         return sprintf(
-            'Due to a mistake %s does not contain the Hogwarts teachers. Please fix this!',
+            'Due to a mistake %s does not only contain the Hogwarts teachers. Please fix this!',
             Level6::EXPECTED_VIEW_NAME,
         );
     }

@@ -56,4 +56,20 @@ abstract class ViewCompareLevel implements DemoDataInterface
 
         return null;
     }
+
+    protected function getViewDefinition(
+        Connection $connection,
+        string $viewName,
+        string $schemaName,
+    ): ?string {
+        $name = $connection->fetchOne(
+            'SELECT view_definition FROM information_schema.views where TABLE_SCHEMA = :schema AND TABLE_NAME = :name',
+            ['schema' => $schemaName, 'name' => $viewName]
+        );
+        if ($name === false) {
+            return null;
+        }
+
+        return $name;
+    }
 }
