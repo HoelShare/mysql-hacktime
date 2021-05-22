@@ -6,15 +6,9 @@ namespace App\Service\DemoData;
 
 use App\Constants\Level5;
 use Doctrine\DBAL\Connection;
-use Faker\Factory;
 
-class Level5CreateView implements DemoDataInterface
+class Level5CreateView extends ViewCompareLevel
 {
-    public function __construct(
-        private Connection $rootConnection,
-    ) {
-    }
-
     public function create(Connection $connection): void
     {
         $connection->executeQuery(
@@ -56,41 +50,12 @@ SQL
 
     public function validate(Connection $connection, string $username): ?string
     {
-        $baseType = $connection->fetchOne(
-            'SELECT TABLE_TYPE from information_schema.tables where TABLE_SCHEMA = :userSchema and TABLE_NAME = :table',
-            [
-                'userSchema' => $username,
-                'table' => Level5::EXPECTED_VIEW_NAME,
-            ]
+        return $this->validateView(
+            $connection,
+            $username,
+            Level5::EXPECTED_VIEW_NAME,
+            Level5::TABLE_NAME_TO_COMPARE
         );
-
-        if ($baseType === false) {
-            return 'Did you try to create the view and just used a wrong name?';
-        }
-
-        if ($baseType !== 'VIEW') {
-            return 'It does not look like a view?';
-        }
-
-        $rows = $connection
-            ->createQueryBuilder()
-            ->select('*')
-            ->from(Level5::EXPECTED_VIEW_NAME)
-            ->execute()
-            ->fetchAllAssociative();
-
-        $compareRows = $this->rootConnection
-            ->createQueryBuilder()
-            ->select('*')
-            ->from(Level5::TABLE_NAME_TO_COMPARE)
-            ->execute()
-            ->fetchAllAssociative();
-
-        if ($compareRows !== $rows) {
-            return 'The result seems to be wrong, possible mistakes. The view contains invalid data or wrong column names.';
-        }
-
-        return null;
     }
 
     public function reset(Connection $connection): void

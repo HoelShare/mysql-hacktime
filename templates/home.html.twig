@@ -5,10 +5,12 @@
 {% block heading %}
     <h1>SQL-Game-Challenge</h1>
 
-    {% if joke is defined %}
-        <p>{{ joke.joke }}</p>
-        <p>{{ joke.punchline }}</p>
-    {% endif %}
+    <div class="joke">
+        {% if joke is defined %}
+            <p>{{ joke.joke }}</p>
+            <p>{{ joke.punchline }}</p>
+        {% endif %}
+    </div>
 {% endblock %}
 
 {% block content %}
@@ -19,4 +21,9 @@
         <input class="text-input" type="text" placeholder="name" name="username">
         <button class="button" type="submit">Create</button>
     </form>
+
+    <h3>Introduction</h3>
+    <p>In the first levels you will learn the basic concepts. In the further levels, mostly views have to be created so
+        that the results can be compared.</p>
+    <p>The further you get the harder the levels become!</p>
 {% endblock %}
