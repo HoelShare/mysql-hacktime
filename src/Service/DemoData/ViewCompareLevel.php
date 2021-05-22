@@ -16,14 +16,13 @@ abstract class ViewCompareLevel implements DemoDataInterface
 
     protected function validateView(
         Connection $connection,
-        string $schema,
         string $viewName,
         string $tableNameToCompare
     ): ?string {
         $baseType = $connection->fetchOne(
             'SELECT TABLE_TYPE from information_schema.tables where TABLE_SCHEMA = :userSchema and TABLE_NAME = :table',
             [
-                'userSchema' => $schema,
+                'userSchema' => $connection->getDatabase(),
                 'table' => $viewName,
             ]
         );
@@ -60,12 +59,12 @@ abstract class ViewCompareLevel implements DemoDataInterface
     protected function getViewDefinition(
         Connection $connection,
         string $viewName,
-        string $schemaName,
     ): ?string {
-        $name = $connection->fetchOne(
-            'SELECT view_definition FROM information_schema.views where TABLE_SCHEMA = :schema AND TABLE_NAME = :name',
-            ['schema' => $schemaName, 'name' => $viewName]
+        $name = $this->rootConnection->fetchOne(
+            'SELECT view_definition FROM information_schema.views where VIEW_DEFINITION <> :empty and TABLE_SCHEMA = :schema and TABLE_NAME = :name',
+            ['schema' => $connection->getDatabase(), 'name' => $viewName, 'empty' => '']
         );
+
         if ($name === false) {
             return null;
         }

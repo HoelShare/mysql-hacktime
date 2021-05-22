@@ -38,7 +38,6 @@ class Level8LeftJoin extends ViewCompareLevel
     {
         return $this->validateView(
             $connection,
-            $username,
             Level8::EXPECTED_VIEW_NAME,
             Level8::VIEW_NAME_TO_COMPARE
         );

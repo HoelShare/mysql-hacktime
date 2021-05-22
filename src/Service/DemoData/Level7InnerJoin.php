@@ -54,7 +54,6 @@ SQL
     {
         return $this->validateView(
             $connection,
-            $username,
             Level7::EXPECTED_VIEW_NAME,
             Level7::EXPECTED_VIEW_NAME
         );

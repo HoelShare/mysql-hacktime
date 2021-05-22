@@ -69,7 +69,6 @@ SQL
     {
         return $this->validateView(
             $connection,
-            $username,
             Level6::EXPECTED_VIEW_NAME,
             Level6::TABLE_NAME_TO_COMPARE
         );
