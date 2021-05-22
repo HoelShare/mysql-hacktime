@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Service\DemoData;
 
-use App\Constants\Level6;
-use App\Constants\Level7;
-use App\Constants\Level8;
 use App\Constants\Level9;
 use Doctrine\DBAL\Connection;
 
@@ -67,7 +64,7 @@ SQL
 
         $definition = $this->getViewDefinition($connection, Level9::VIEW_NAME_MONDAY_WEDNESDAY_SATURDAY);
 
-        if (stripos($definition, ' in') === false) {
+        if (mb_stripos($definition, ' in') === false) {
             return 'Try filtering with IN. [weekday IN (0, 2, 5)]';
         }
 

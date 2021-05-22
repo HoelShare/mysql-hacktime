@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace App\Exception;
 
-use Throwable;
+use RuntimeException;
 
-class LevelNotFoundException extends \RuntimeException
+class LevelNotFoundException extends RuntimeException
 {
     public function __construct(private int $level)
     {

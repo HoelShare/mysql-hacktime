@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Exception\LevelNotFoundException;
 use App\Service\DemoData\DemoDataInterface;
 use Doctrine\DBAL\Connection;
+use Exception;
 
 class DemoDataService
 {
@@ -75,7 +76,7 @@ SQL
         $demoData = $this->getLevel($level);
         try {
             $demoData->reset($connection);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
         }
         if ($level > 0) {
             $connection->executeQuery('DELETE FROM level where number = :level', ['level' => $level]);

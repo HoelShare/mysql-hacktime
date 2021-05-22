@@ -1,12 +1,16 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace App\Constants;
 
 class Level6
 {
     public const TABLE_NAME_TO_COMPARE = 'hogwarts_teacher';
+
     public const EXPECTED_VIEW_NAME = 'hogwarts_teacher';
+
     public const TYPE_STUDENT = 'student';
+
     public const TYPE_TEACHER = 'teacher';
 
     public const PERSONS = [

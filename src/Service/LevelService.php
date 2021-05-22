@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -47,7 +48,7 @@ class LevelService
             return 0;
         }
 
-        return 1 + (int)$level;
+        return 1 + (int) $level;
     }
 
     private function logTry(string $username, int $currentLevel, bool $success): void
@@ -57,7 +58,7 @@ class LevelService
             INSERT INTO solution_try (number, user, success) VALUES (:number, :user, :success)
 SQL
             ,
-            ['number' => $currentLevel, 'user' => $username, 'success' => (int)$success]
+            ['number' => $currentLevel, 'user' => $username, 'success' => (int) $success]
         );
     }
 
@@ -72,6 +73,6 @@ SQL
             return 0;
         }
 
-        return (int)$try;
+        return (int) $try;
     }
 }

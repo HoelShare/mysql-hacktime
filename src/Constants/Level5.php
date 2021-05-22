@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace App\Constants;
 
 class Level5
 {
     public const TABLE_NAME_TO_COMPARE = 'filtered_user';
+
     public const EXPECTED_VIEW_NAME = 'user';
 
     public const NAMES = [

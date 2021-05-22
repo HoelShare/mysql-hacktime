@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use App\Service\LevelService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,6 +40,7 @@ class CheckController extends AbstractController
                 $params['hintMessage'] = $check;
             }
         }
+
         return $this->render('user.html.twig', $params);
     }
 

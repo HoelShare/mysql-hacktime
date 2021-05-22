@@ -6,6 +6,8 @@ namespace App\Service;
 
 use App\Exception\InvalidUsernameException;
 use Doctrine\DBAL\Connection;
+use function in_array;
+use function mb_strlen;
 
 class UserService
 {
@@ -19,7 +21,7 @@ class UserService
 
     public function createUser(string $userName): string
     {
-        $userName = strtolower($userName);
+        $userName = mb_strtolower($userName);
         $this->checkUserExists($userName);
         $password = $this->randomPassword();
 
@@ -55,7 +57,7 @@ SQL
                 $name,
                 $host
             ),
-            ['username' => $name, 'password' => $password,]
+            ['username' => $name, 'password' => $password]
         );
 
         $this->demoDataService->createDemoData($name, 0);
@@ -63,7 +65,7 @@ SQL
 
     private function checkUserExists(string $userName): void
     {
-        if (strlen($userName) < 4) {
+        if (mb_strlen($userName) < 4) {
             throw new InvalidUsernameException(sprintf('Username (%s) too short', $userName));
         }
 
@@ -71,7 +73,7 @@ SQL
             throw new InvalidUsernameException(sprintf('Username (%s) contains invalid characters', $userName));
         }
 
-        if (in_array($userName, self::USERNAME_BLACKLIST)) {
+        if (in_array($userName, self::USERNAME_BLACKLIST, true)) {
             throw new InvalidUsernameException(sprintf('Username (%s) is on blacklist', $userName));
         }
 
@@ -88,12 +90,13 @@ SQL
     private function randomPassword(): string
     {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        $pass = array(); //remember to declare $pass as an array
-        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        $pass = []; //remember to declare $pass as an array
+        $alphaLength = mb_strlen($alphabet) - 1; //put the length -1 in cache
         for ($i = 0; $i < 16; $i++) {
             $n = random_int(0, $alphaLength);
             $pass[] = $alphabet[$n];
         }
+
         return implode($pass); //turn the array into a string
     }
 

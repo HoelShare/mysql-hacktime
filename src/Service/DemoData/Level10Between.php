@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\DemoData;
 
 use App\Constants\Level10;
-use App\Constants\Level9;
 use Doctrine\DBAL\Connection;
 
 class Level10Between extends ViewCompareLevel
@@ -137,7 +136,7 @@ SQL
 
         $definition = $this->getViewDefinition($connection, Level10::VIEW_NAME_MID_MARKET_ORDERS);
 
-        if (stripos($definition, ' between') === false) {
+        if (mb_stripos($definition, ' between') === false) {
             return 'Try filtering with BETWEEN, so you do not need >= and <=. [amount_total between 150 and 500]';
         }
 

@@ -31,6 +31,7 @@ class ResetController extends AbstractController
 
         if (!$isValid) {
             $level = $this->levelService->getCurrentLevel($user);
+
             return $this->redirectToRoute(
                 'renderLevel',
                 [

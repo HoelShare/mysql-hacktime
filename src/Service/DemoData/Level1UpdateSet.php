@@ -29,7 +29,7 @@ class Level1UpdateSet implements DemoDataInterface
 
     public function validate(Connection $connection, string $username): ?string
     {
-        $countRows = (int)$connection->fetchOne('SELECT count(number) from level where number = 1 and solution is not null');
+        $countRows = (int) $connection->fetchOne('SELECT count(number) from level where number = 1 and solution is not null');
 
         if ($countRows !== 1) {
             return 'Try using a command like UPDATE level [] WHERE number = []';

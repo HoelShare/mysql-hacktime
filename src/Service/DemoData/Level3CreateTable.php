@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Service\DemoData;
 
 use Doctrine\DBAL\Connection;
-use Faker\Factory;
 
 class Level3CreateTable implements DemoDataInterface
 {
     public const EXPECTED_TABLE_NAME = 'level3';
+
     public const EXPECTED_FIRST_COLUMN_NAME = 'id';
 
     public function create(Connection $connection): void
@@ -65,11 +65,11 @@ SQL
             ['userSchema' => $username, 'tableName' => self::EXPECTED_TABLE_NAME]
         );
 
-        if (strtolower($column['COLUMN_NAME']) !== self::EXPECTED_FIRST_COLUMN_NAME) {
+        if (mb_strtolower($column['COLUMN_NAME']) !== self::EXPECTED_FIRST_COLUMN_NAME) {
             return 'Did you name the first column as expected?';
         }
 
-        if (strtolower($column['COLUMN_KEY']) !== 'pri') {
+        if (mb_strtolower($column['COLUMN_KEY']) !== 'pri') {
             return 'Did you create the column with a Primary Key?';
         }
 

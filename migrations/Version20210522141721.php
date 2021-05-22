@@ -39,7 +39,7 @@ SQL
             'search',
             'payment_change',
             'snippet_change',
-            'test_order'
+            'test_order',
         ];
 
         foreach ($tenants as $tenantId) {
@@ -60,7 +60,7 @@ SQL
                         'tenant' => $tenantId,
                         'created' => $createdAt->format(DATE_ATOM),
                         'type' => $type,
-                        'data' => $data
+                        'data' => $data,
                     ]
                 );
             }

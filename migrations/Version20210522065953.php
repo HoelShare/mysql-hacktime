@@ -24,7 +24,7 @@ final class Version20210522065953 extends AbstractMigration
             LEFT OUTER JOIN star_wars_ship_pilot swsp on c.id = swsp.pilot_id 
             LEFT OUTER JOIN star_wars_star_ship s on swsp.ship_id = s.id
 SQL
-            ,Level8::VIEW_NAME_TO_COMPARE)
+            , Level8::VIEW_NAME_TO_COMPARE)
         );
     }
 

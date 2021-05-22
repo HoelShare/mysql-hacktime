@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
+use DateInterval;
+use DateTime;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 use Faker\Factory;
@@ -75,7 +77,7 @@ SQL
 
                 if ($historyEntries === 1 && $faker->boolean(90)) {
                     $currentFlag = 1;
-                    $validTo = new \DateTime('9999-12-31 23:59:59');
+                    $validTo = new DateTime('9999-12-31 23:59:59');
                 }
 
                 $this->connection->executeQuery(
@@ -114,10 +116,10 @@ CURRENT_FLAG
                         'customer_number' => $faker->randomNumber(),
                         'creation_date' => $creationDate->format(DATE_ATOM),
                         'website' => $faker->domainName(),
-                        'banned' => (int)$faker->boolean(2),
-                        'test' => (int)$faker->boolean(5),
+                        'banned' => (int) $faker->boolean(2),
+                        'test' => (int) $faker->boolean(5),
                         'notice' => $faker->boolean(20) ? implode(' ', $faker->sentences()) : null,
-                        'verified' => (int)$verified,
+                        'verified' => (int) $verified,
                         'net_promoter_score' => $faker->boolean(30) ? $faker->randomDigit() : null,
                         'VALID_FROM_DTTM' => $validFrom->format(DATE_ATOM),
                         'VALID_TO_DTTM' => $validTo->format(DATE_ATOM),
@@ -125,7 +127,7 @@ CURRENT_FLAG
                     ]
                 );
 
-                $validFrom = $validTo->add(new \DateInterval('PT1S'));
+                $validFrom = $validTo->add(new DateInterval('PT1S'));
             } while (--$historyEntries);
         }
 
@@ -139,7 +141,7 @@ CURRENT_FLAG
 
                 if ($historyEntries === 1) {
                     $currentFlag = 1;
-                    $validTo = new \DateTime('9999-12-31 23:59:59');
+                    $validTo = new DateTime('9999-12-31 23:59:59');
                 }
 
                 $this->connection->executeQuery(
@@ -160,7 +162,7 @@ SQL
                     ]
                 );
 
-                $validFrom = $validTo->add(new \DateInterval('PT1S'));
+                $validFrom = $validTo->add(new DateInterval('PT1S'));
             } while (--$historyEntries);
         }
 
@@ -174,7 +176,7 @@ SQL
 
                 if ($historyEntries === 1) {
                     $currentFlag = 1;
-                    $validTo = new \DateTime('9999-12-31 23:59:59');
+                    $validTo = new DateTime('9999-12-31 23:59:59');
                 }
 
                 $this->connection->executeQuery(
@@ -193,7 +195,7 @@ SQL
                     ]
                 );
 
-                $validFrom = $validTo->add(new \DateInterval('PT1S'));
+                $validFrom = $validTo->add(new DateInterval('PT1S'));
             } while (--$historyEntries);
         }
     }

@@ -37,7 +37,7 @@ class Level12CountIsNull implements DemoDataInterface
             return 'Nothing set to the solution column! Try counting the orders & update the solution.';
         }
 
-        $result = (int)$connection->fetchOne(
+        $result = (int) $connection->fetchOne(
             'SELECT count(0) from `order` 
         inner join order_address on 
             order_address.order_id = order.id 
@@ -45,10 +45,10 @@ class Level12CountIsNull implements DemoDataInterface
         where salutation is null'
         );
 
-        if ($result < (int)$solution) {
+        if ($result < (int) $solution) {
             return 'Wrong, you counted too much! The orders are multi tenant, so remember joining the tenant_id';
         }
-        if ($result > (int)$solution) {
+        if ($result > (int) $solution) {
             return 'Wrong, you counted too less!';
         }
 

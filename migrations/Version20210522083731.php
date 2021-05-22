@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
+use DateTime;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 use Faker\Factory;
@@ -152,7 +153,7 @@ SQL
                         'amount_total' => $faker->randomFloat(2, 1, 1000),
                         'amount_net' => $faker->randomFloat(2, 1, 1000),
                         'shipping_total' => $faker->randomFloat(2, 1, 50),
-                        'created_at' => (new \DateTime())->format(DATE_ATOM),
+                        'created_at' => (new DateTime())->format(DATE_ATOM),
                     ]
                 );
 
@@ -200,7 +201,7 @@ created_at
                         'company' => $faker->company(),
                         'department' => $faker->jobTitle(),
                         'salutation' => $faker->boolean(70) ? null : $faker->slug(2),
-                        'title' => $faker->boolean(70) ? null :$faker->title(),
+                        'title' => $faker->boolean(70) ? null : $faker->title(),
                         'first_name' => $faker->firstName(),
                         'last_name' => $faker->lastName(),
                         'street' => $faker->streetName(),
@@ -208,7 +209,7 @@ created_at
                         'city' => $faker->city(),
                         'tax_rate' => $faker->randomFloat(1, 6, 23),
                         'phone_number' => $faker->phoneNumber(),
-                        'created_at' => (new \DateTime())->format(DATE_ATOM),
+                        'created_at' => (new DateTime())->format(DATE_ATOM),
                     ]
                 );
 

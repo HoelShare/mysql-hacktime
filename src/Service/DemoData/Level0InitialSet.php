@@ -49,7 +49,7 @@ SQL
 
     public function validate(Connection $connection, string $username): ?string
     {
-        $countRows = (int)$connection->fetchOne('SELECT count(number) from level where number = 1');
+        $countRows = (int) $connection->fetchOne('SELECT count(number) from level where number = 1');
         if ($countRows !== 1) {
             return 'Try using an INSERT INTO level [...] command';
         }

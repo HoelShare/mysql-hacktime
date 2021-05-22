@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Service\DemoData;
 
 use App\Constants\Globals;
-use App\Constants\Level13;
-use App\Constants\Level14;
 use App\Constants\Level15;
 use Doctrine\DBAL\Connection;
 

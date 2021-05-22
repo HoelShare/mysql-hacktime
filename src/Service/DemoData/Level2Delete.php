@@ -44,7 +44,7 @@ SQL
 
     public function validate(Connection $connection, string $username): ?string
     {
-        $countRows = (int)$connection->fetchOne(
+        $countRows = (int) $connection->fetchOne(
             'SELECT count(0) from level2'
         );
 

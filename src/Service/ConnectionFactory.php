@@ -26,7 +26,7 @@ class ConnectionFactory
             throw new UserNotFoundException($username);
         }
 
-        return (string)$password;
+        return (string) $password;
     }
 
     public function createForUser(string $username): Connection
@@ -41,7 +41,7 @@ class ConnectionFactory
             ['user' => $username, 'password' => $password, 'dbname' => $username]
         );
         unset($params['url']);
-        $connection =  new Connection($params, $this->connection->getDriver());
+        $connection = new Connection($params, $this->connection->getDriver());
         $this->connections[$username] = $connection;
 
         return $connection;

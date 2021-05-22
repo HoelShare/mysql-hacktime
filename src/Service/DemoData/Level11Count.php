@@ -32,16 +32,16 @@ class Level11Count implements DemoDataInterface
             ['number' => $this->getLevel()]
         );
 
-        if ($solution === false ||$solution === null || $solution === '') {
+        if ($solution === false || $solution === null || $solution === '') {
             return 'Nothing set to the solution column! Try counting the orders & update the solution.';
         }
 
-        $result = (int)$connection->fetchOne('SELECT count(0) from `order`');
+        $result = (int) $connection->fetchOne('SELECT count(0) from `order`');
 
-        if ($result < (int)$solution) {
+        if ($result < (int) $solution) {
             return 'Wrong, you counted too much, just count the orders!';
         }
-        if ($result > (int)$solution) {
+        if ($result > (int) $solution) {
             return 'Wrong, count all orders!';
         }
 

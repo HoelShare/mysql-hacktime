@@ -9,7 +9,6 @@ use App\Constants\Level17;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-
 final class Version20210522202949 extends AbstractMigration
 {
     public function up(Schema $schema): void
@@ -68,6 +67,5 @@ SQL
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-
     }
 }

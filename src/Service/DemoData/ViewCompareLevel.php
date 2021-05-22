@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Service\DemoData;
 
-use App\Constants\Level5;
 use Doctrine\DBAL\Connection;
 
 abstract class ViewCompareLevel implements DemoDataInterface
