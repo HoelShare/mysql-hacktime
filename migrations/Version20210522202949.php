@@ -14,58 +14,47 @@ final class Version20210522202949 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->connection->executeQuery(
-            sprintf(<<<'SQL'
+            sprintf(
+                <<<'SQL'
 CREATE VIEW `%s` AS
 SELECT 
-    `%s`.`id` AS `id`,
-    `%s`.`name` AS `name`,
-    `%s`.`customer_number` AS `customer_number`,
-    `%s`.`creation_date` AS `creation_date`,
-    `%s`.`website` AS `website`,
-    `%s`.`banned` AS `banned`,
-    `%s`.`test` AS `test`,
-    `%s`.`notice` AS `notice`,
-    `%s`.`verified` AS `verified`,
-    `%s`.`net_promoter_score` AS `net_promoter_score`,
-    `%s`.current_flag = 0 AS `is_deleted`
+    `company`.`id` AS `id`,
+    `company`.`name` AS `name`,
+    `company`.`customer_number` AS `customer_number`,
+    `company`.`creation_date` AS `creation_date`,
+    `company`.`website` AS `website`,
+    `company`.`banned` AS `banned`,
+    `company`.`test` AS `test`,
+    `company`.`notice` AS `notice`,
+    `company`.`verified` AS `verified`,
+    `company`.`net_promoter_score` AS `net_promoter_score`,
+    `company`.`current_flag` = 0 AS `is_deleted`
 FROM
-    %s
+    %s company
 WHERE
     id NOT IN (SELECT 
-            %s.id
+            company.id
         FROM
-            %s
+            %s company
         WHERE
             test = 1)
         AND (id , valid_from_dttm) IN (SELECT 
             id, MAX(VALID_FROM_DTTM)
         FROM
-            %s
+            %s company
         GROUP BY id);
 SQL
-            ,
-            Level17::VIEW_NAME_TO_COMPARE,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
-            Globals::TABLE_COMPANY,
+                ,
+                Level17::VIEW_NAME_TO_COMPARE,
+                Globals::TABLE_COMPANY,
+                Globals::TABLE_COMPANY,
+                Globals::TABLE_COMPANY,
             )
         );
     }
 
-    public function down(Schema $schema): void
+    public function isTransactional(): bool
     {
-        // this down() migration is auto-generated, please modify it to your needs
+        return false;
     }
 }

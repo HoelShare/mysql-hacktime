@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Service\DemoData;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Exception\InvalidFieldNameException;
+use Doctrine\DBAL\Exception\TableNotFoundException;
 
 abstract class ViewCompareLevel implements DemoDataInterface
 {
@@ -69,5 +72,87 @@ abstract class ViewCompareLevel implements DemoDataInterface
         }
 
         return $name;
+    }
+
+    protected function checkResultSame(Connection $connection, string $viewName, string $mainView): ?string
+    {
+        try {
+            $condition = $this->rootConnection->fetchOne(
+                <<<'SQL'
+SELECT 
+    GROUP_CONCAT(' (src.',
+        column_name,
+        ' <=> ',
+        ' dst.',
+        column_name, ') '
+        SEPARATOR ' AND ')
+FROM
+    information_schema.columns
+WHERE
+    table_name = :tableName
+AND TABLE_SCHEMA = :mainSchema
+SQL
+                ,
+                ['tableName' => $mainView, 'mainSchema' => $this->rootConnection->getDatabase()]
+            );
+
+            $countColumn = $this->rootConnection->fetchOne(
+                <<<'SQL'
+SELECT 
+    column_name
+FROM
+    information_schema.columns
+WHERE
+    table_schema = :mainSchema
+        AND table_name = :tableName
+        AND (is_nullable = 'NO'
+        OR ordinal_position = 1)
+ORDER BY is_nullable
+SQL
+                ,
+                ['tableName' => $mainView, 'mainSchema' => $this->rootConnection->getDatabase()]
+            );
+
+            $countSame = (int)$this->rootConnection->fetchOne(
+                sprintf(
+                    'SELECT count(dst.%s) FROM %s src left join %s.%s dst ON %s',
+                    $countColumn,
+                    $mainView,
+                    $connection->getDatabase(),
+                    $viewName,
+                    $condition
+                )
+            );
+            $countExpected = (int)$this->rootConnection->fetchOne(sprintf('SELECT count(0) FROM %s', $mainView));
+
+            if ($countSame === $countExpected) {
+                return null;
+            }
+
+            return 'The result seems to be wrong, did you filter the expected?';
+        } catch (TableNotFoundException $exception) {
+            return sprintf('Did you name the View %s', $viewName);
+        } catch (InvalidFieldNameException $exception) {
+            $fieldNames = $this->rootConnection->fetchOne(
+                <<<'SQL'
+SELECT 
+    GROUP_CONCAT(column_name)
+FROM
+    information_schema.columns
+WHERE
+    table_name = :tableName
+AND TABLE_SCHEMA = :mainSchema
+SQL
+                ,
+                ['tableName' => $mainView, 'mainSchema' => $this->rootConnection->getDatabase()]
+            );
+            return sprintf(
+                'Did you name the columns as expected?
+            %s',
+                $fieldNames
+            );
+        } catch (Exception $exception) {
+            dd($exception);
+        }
     }
 }
