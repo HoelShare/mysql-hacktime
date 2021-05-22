@@ -44,7 +44,7 @@ SQL
 
     public function getDescription(): string
     {
-        return 'Task: Insert a new Level record with number = 1';
+        return 'Task: Insert a new Level record with number = 1. If you think you completed the level, go back to the website and press check!';
     }
 
     public function validate(Connection $connection, string $username): ?string
