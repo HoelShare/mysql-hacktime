@@ -45,12 +45,5 @@ class Level8LeftJoin extends ViewCompareLevel
 
     public function reset(Connection $connection): void
     {
-        $connection->executeQuery(
-          <<<'SQL'
-            DROP TABLE IF EXISTS star_wars_ship_pilot;
-            DROP TABLE IF EXISTS star_wars_star_ship;
-            DROP TABLE IF EXISTS star_wars_character;
-SQL
-        );
     }
 }
