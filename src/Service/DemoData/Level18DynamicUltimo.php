@@ -7,7 +7,7 @@ namespace App\Service\DemoData;
 use App\Constants\Globals;
 use Doctrine\DBAL\Connection;
 
-class Level16DynamicUltimo extends ViewCompareLevel
+class Level18DynamicUltimo extends ViewCompareLevel
 {
     private const TABLE_NAME = 'ultimo_date_range';
 
@@ -62,7 +62,7 @@ SQL
 
     public function getLevel(): int
     {
-        return 16;
+        return 18;
     }
 
     public function getDescription(): string

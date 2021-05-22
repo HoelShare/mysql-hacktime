@@ -9,13 +9,14 @@ use App\Constants\Level14;
 use App\Constants\Level15;
 use Doctrine\DBAL\Exception\DriverException;
 
-class Level16DynamicUltimoTest extends KernelTestCase
+class Level18DynamicUltimoTest extends KernelTestCase
 {
     /**
      * @before
      */
     public function cleanUp()
     {
+        static::markTestSkipped('Level 17 missing');
         try {
             $this->connection->executeQuery(
                 sprintf(
@@ -73,7 +74,6 @@ SQL
 
         $this->assertView();
     }
-
 
     public function testLevel16Success(): void
     {
