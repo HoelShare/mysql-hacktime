@@ -152,7 +152,7 @@ SQL
                 $fieldNames
             );
         } catch (Exception $exception) {
-            dd($exception);
+            return $exception->getMessage();
         }
     }
 }
