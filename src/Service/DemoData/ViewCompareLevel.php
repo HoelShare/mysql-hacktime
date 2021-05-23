@@ -113,7 +113,7 @@ SQL
                 ['tableName' => $mainView, 'mainSchema' => $this->rootConnection->getDatabase()]
             );
 
-            $countSame = (int)$this->rootConnection->fetchOne(
+            $countSame = (int) $this->rootConnection->fetchOne(
                 sprintf(
                     'SELECT count(dst.%s) FROM %s src left join %s.%s dst ON %s',
                     $countColumn,
@@ -123,7 +123,7 @@ SQL
                     $condition
                 )
             );
-            $countExpected = (int)$this->rootConnection->fetchOne(sprintf('SELECT count(0) FROM %s', $mainView));
+            $countExpected = (int) $this->rootConnection->fetchOne(sprintf('SELECT count(0) FROM %s', $mainView));
 
             if ($countSame === $countExpected) {
                 return null;
@@ -146,6 +146,7 @@ SQL
                 ,
                 ['tableName' => $mainView, 'mainSchema' => $this->rootConnection->getDatabase()]
             );
+
             return sprintf(
                 'Did you name the columns as expected?
             %s',

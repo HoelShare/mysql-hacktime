@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace DoctrineMigrations;
 
 use App\Constants\Globals;
-use App\Constants\Level19;
 use App\Constants\Level20;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
+use App\Constants\Globals;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 use Faker\Factory;
@@ -14,8 +15,9 @@ final class Version20210522141721 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->connection->executeQuery(
-            <<<'SQL'
-            create table event_log(
+            sprintf(
+                <<<'SQL'
+            create table `%s`(
                 id int not null,
                 tenant_id int not null,
                 created_at datetime not null,
@@ -25,6 +27,9 @@ final class Version20210522141721 extends AbstractMigration
                 foreign key (tenant_id) references tenant (id)
             );
 SQL
+                ,
+                Globals::TABLE_EVENT_LOG,
+            )
         );
 
         $faker = Factory::create();

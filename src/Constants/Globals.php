@@ -10,4 +10,6 @@ class Globals
     public const VIEW_NAME_ULTIMO = 'ultimo';
 
     public const TABLE_COMPANY = 'company';
+
+    public const TABLE_EVENT_LOG = 'event_log';
 }
