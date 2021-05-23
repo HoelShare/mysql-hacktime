@@ -59,7 +59,7 @@ SQL
     {
         return sprintf(
             'Extract all search terms from the %s and prepare them in a "%s" view.
-            Columns: ',
+            Columns: id, tenant_id, created_at, keyword',
             Globals::TABLE_EVENT_LOG,
             Level21::EXPECTED_VIEW_NAME,
         );
@@ -72,5 +72,14 @@ SQL
 
     public function reset(Connection $connection): void
     {
+        $connection->executeQuery(
+            sprintf(
+                <<<'SQL'
+        DROP TABLE IF EXISTS %s;
+SQL
+                ,
+                Globals::TABLE_EVENT_LOG,
+            )
+        );
     }
 }
