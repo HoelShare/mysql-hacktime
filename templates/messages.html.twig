@@ -6,14 +6,14 @@
             </div>
         {% endblock %}
     {% endif %}
-    {% if successMessage is defined %}
+    {% if successMessage is defined and successMessage != ''  %}
         {% block successMessage %}
             <div class="message message-success">
                 {{ successMessage }}
             </div>
         {% endblock %}
     {% endif %}
-    {% if hintMessage is defined %}
+    {% if hintMessage is defined and hintMessage != '' %}
         {% block hintMessage %}
             <div class="message message-hint">
                 {{ hintMessage }}

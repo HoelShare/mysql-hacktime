@@ -5,4 +5,8 @@
 
 {% block content %}
     Finished! Congratz!
+    {{ board.render(user, level - 1)|raw }}
+{% endblock %}
+
+{% block sidebar_wrapper %}
 {% endblock %}

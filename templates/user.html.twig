@@ -13,20 +13,22 @@
     {% if levelData is defined and levelData is not null and (levelData|length) > 0 %}
         {% set temp = levelData|first %}
         <h3>Example Rows of the new View</h3>
-        <table>
-            <tr>
-                {% for property_title in temp|keys %}
-                    <td>{{ property_title }}</td>
-                {% endfor %}
-            </tr>
-            {% for item in levelData %}
+        <div class="example-content">
+            <table class="example-data">
                 <tr>
-                    {% for field in temp|keys %}
-                        <td>{{ attribute(item, field) }}</td>
+                    {% for property_title in temp|keys %}
+                        <th>{{ property_title }}</th>
                     {% endfor %}
                 </tr>
-            {% endfor %}
-        </table>
+                {% for item in levelData %}
+                    <tr>
+                        {% for field in temp|keys %}
+                            <td>{{ attribute(item, field) }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
     {% endif %}
 
     {% include 'level/level' ~ level|default(0) ~ '.html.twig' ignore missing %}

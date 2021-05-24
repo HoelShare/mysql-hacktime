@@ -16,31 +16,45 @@ class LeaderBoardService
     ) {
     }
 
-    public function render(string $user): string
+    public function render(?string $user, ?int $level = null): string
     {
-        $level = $this->levelService->getCurrentLevel($user);
-        $leaderboard = $this->getLeaderBoard($user, $level->getLevel());
+        $showAll = false;
+        if ($level === null) {
+            $level = $this->levelService->getCurrentLevel($user)->getLevel() - 1;
+            $showAll = true;
+        }
+
+        $leaderboard = $this->getLeaderBoard($user, $level, $showAll);
 
         return $this->twig->render('leaderboard.html.twig', ['leaderBoard' => $leaderboard, 'user' => $user]);
     }
 
-    private function getLeaderBoard(string $user, int $level): array
+    private function getLeaderBoard(?string $user, int $level, bool $showAll): array
     {
         return $this->connection->fetchAllAssociative(
             <<<'SQL'
-SELECT IF(`level` <= :userLevel, `level`, null) as `level`, `user`, `rank` 
-FROM (SELECT 
-    MAX(number) AS `level`, user, row_number() over (order by max(number) desc, min(created_at) asc) as `rank`
+SELECT * FROM (
+select  rank() over (order by  timestampdiff(second, start, end)) as `rank`, user, timestampdiff(second, start, end) / 60 as `minutes` from (
+SELECT 
+    user,
+        FIRST_VALUE(created_at) over w as `start`, 
+        LAST_VALUE(created_at) over w as `end`,
+        last_value(success) over w = 1 as `lastTry`,
+        last_value(`number`) over w as `lastLevel`
 FROM
     solution_try
-WHERE
-    (success = 1 AND number > 0)
-        OR user = :user
-GROUP BY user) board
-where `user` = :user or `rank` <= 10
+    where user <> :testUser
+WINDOW w as (partition by user order by id)) a
+where lastLevel = :userLevel and lastTry = 1) userRanked
+where (`rank` <= 10 or `user` = :user or :showAll = 1) 
 SQL
             ,
-            ['userLevel' => $level, 'user' => $user]
+            [
+                'testUser' => 'test',
+                'userLevel' => $level,
+                'user' => $user,
+                'showAll' => (int) $showAll,
+            ]
         );
     }
 }

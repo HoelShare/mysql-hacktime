@@ -163,7 +163,7 @@ SQL
     public function getPreviewData(): ?array
     {
         try {
-            return $this->rootConnection->fetchAllAssociative(sprintf('SELECT * FROM %s LIMIT 20', $this->getMainViewName()));
+            return $this->rootConnection->fetchAllAssociative(sprintf('SELECT * FROM %s LIMIT 10', $this->getMainViewName()));
         } catch (Exception $exception) {
             return null;
         }

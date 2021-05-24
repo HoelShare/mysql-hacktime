@@ -26,12 +26,16 @@ class ErrorHandler implements EventSubscriberInterface
     public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
-        $templateName = match (true) {
-            $exception instanceof LevelNotFoundException => 'finished.html.twig',
-            default => 'home.html.twig',
-        };
+        $data = [];
+        if ($exception instanceof LevelNotFoundException) {
+            $templateName = 'finished.html.twig';
+            $data['user'] = $exception->getUsername();
+            $data['level'] = $exception->getLevel();
+        } else {
+            $templateName = 'home.html.twig';
+        }
 
-        $content = $this->twig->render($templateName, ['errorMessage' => $exception->getMessage()]);
+        $content = $this->twig->render($templateName, array_merge($data, ['errorMessage' => $exception->getMessage()]));
 
         $response = new Response($content);
         $event->setResponse($response);

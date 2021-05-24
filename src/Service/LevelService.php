@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Exception\LevelNotFoundException;
 use App\Exception\UserNotFoundException;
 use App\Service\DemoData\DemoDataInterface;
 use Doctrine\DBAL\Connection;
@@ -40,16 +42,21 @@ class LevelService
 
     public function getCurrentLevel(string $username): DemoDataInterface
     {
-        $this->checkUserExists($username);
-        $level = $this->connection->fetchOne(
-            'SELECT MAX(number) FROM solution_try where success = true and user = :username',
-            ['username' => $username]
-        );
-        if ($level === false || $level === null) {
-            return $this->demoDataService->getLevel(0);
-        }
+        try {
+            $this->checkUserExists($username);
+            $level = $this->connection->fetchOne(
+                'SELECT MAX(number) FROM solution_try where success = true and user = :username',
+                ['username' => $username]
+            );
+            if ($level === false || $level === null) {
+                return $this->demoDataService->getLevel(0);
+            }
 
-        return $this->demoDataService->getLevel(1 + (int) $level);
+            return $this->demoDataService->getLevel(1 + (int) $level);
+        } catch (LevelNotFoundException $levelNotFoundException) {
+            $levelNotFoundException->setUsername($username);
+            throw $levelNotFoundException;
+        }
     }
 
     private function logTry(string $username, int $currentLevel, bool $success): void
