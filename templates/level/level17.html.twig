@@ -1,0 +1,18 @@
+<h2>Sub Query</h2>
+<p>
+    A subquery is a SELECT statement within another statement.
+    All subquery forms and operations that the SQL standard requires are supported, as well as a few features that are MySQL-specific.
+    Here is an example of a subquery:
+</p>
+<pre>
+SELECT * FROM table_one WHERE column1 = (SELECT column1 FROM table_two);
+</pre>
+
+<p>
+    With subqueries it's also possible to query for multiple fields.
+</p>
+
+<pre>
+SELECT * FROM table_one
+    WHERE (column1, column2) in (SELECT column1, column2 FROM table_two);
+</pre>

@@ -1,0 +1,19 @@
+<h2>SELECT IN</h2>
+<p>
+    The IN operator allows you to specify multiple values in a WHERE clause.
+    The IN operator is a shorthand for multiple OR conditions.
+</p>
+<pre>
+SELECT column_name(s)
+FROM table_name
+WHERE column_name IN (value1, value2, ...);
+</pre>
+<p>
+    It's also possible to connect the IN Operator with a Sub Select
+</p>
+
+<pre>
+    SELECT column_name(s)
+FROM table_name
+WHERE column_name IN (SELECT STATEMENT);
+</pre>

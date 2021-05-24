@@ -1,0 +1,44 @@
+<h2>View</h2>
+<p>
+    In SQL, a view is a virtual table based on the result-set of an SQL statement.
+    A view contains rows and columns, just like a real table.
+    The fields in a view are fields from one or more real tables in the database.
+    You can add SQL statements and functions to a view and present the data as if the data were coming from one single table.
+    A view is created with the CREATE VIEW statement.
+</p>
+
+<pre>
+CREATE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+</pre>
+<div class="message">
+    Note: A view always shows up-to-date data! The database engine recreates the view, every time a user queries it.
+</div>
+
+<p>
+    If the View already exists, it easy to replace, just add "OR RECREATE" after the "CREATE"
+</p>
+
+<pre>
+CREATE OR RECREATE VIEW view_name AS
+SELECT column1, column2, column3, ...
+FROM table_name
+WHERE condition;
+</pre>
+
+<p>
+    To lookup the definition of an existing view, just use the following statement.
+    Most tools also have an easy way to retrieve this.
+</p>
+<pre>
+SHOW CREATE VIEW view_name;
+</pre>
+
+<p>
+    Dropping a view is nearly the same like dropping a Table.
+</p>
+<pre>
+DROP VIEW view_name;
+</pre>

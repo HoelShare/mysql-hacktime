@@ -1,0 +1,10 @@
+<h2>HAVING</h2>
+<p>
+    The HAVING clause was added to SQL because the WHERE keyword cannot be used with aggregate functions.
+</p>
+<pre>
+SELECT id, SUM(amount_total)
+FROM table_name
+GROUP BY id
+HAVING SUM(amount_total) > 500
+</pre>

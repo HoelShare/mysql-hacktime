@@ -1,0 +1,46 @@
+<h2>Join</h2>
+<p>
+    A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+    Let's focus on LEFT OUTER JOIN
+</p>
+<h2>Left JOIN</h2>
+<p>
+    The LEFT OUTER JOIN keyword returns all records from the left table (table1),
+    and the matching records from the right table (table2).
+    The result is 0 records from the right side, if there is no match.
+</p>
+<pre>
+SELECT column_name(s)
+FROM table1
+LEFT OUTER JOIN table2
+ON table1.column_name = table2.column_name;
+</pre>
+<div class="message message-hint">
+    In MySQL the LEFT Keyword is optional.
+</div>
+
+<img src="https://www.w3schools.com/sql/img_leftjoin.gif" alt="SQL LEFT JOIN" width="200"/>
+
+<h3>Attention</h3>
+<p>
+    If you want to filter the left table, you have to check if it is NULL or the desired value.
+    If the NULL comparison is forgotten, the JOIN behaves like an INNER JOIN
+</p>
+<p>
+    It's also possible to add the filter condition to the ON JOIN Condition instead of the where condition.
+</p>
+
+<h4>Comparison</h4>
+<pre>
+SELECT column_name
+    FROM table_one
+    LEFT JOIN table_two ON table_one.key = table_two.key
+    WHERE (table_two.VALUE IS NULL OR table_two.VALUE = 'foobar')
+</pre>
+VS.
+<pre>
+    SELECT column_name
+    FROM table_one
+    LEFT JOIN table_two ON table_one.key = table_two.key
+            AND table_two.VALUE = 'foobar'
+</pre>

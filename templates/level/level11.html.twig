@@ -1,0 +1,19 @@
+<h2>SELECT COUNT</h2>
+<p>
+    For this aggregate function, simply specify the COUNT keyword, including the column of records to count in the parentheses.
+    All records are counted whose value <b>is not NULL.</b>
+</p>
+<pre>
+SELECT COUNT(column_name)
+FROM table_name
+WHERE column_name BETWEEN value1 AND value2;
+</pre>
+
+<p>
+    To count unique Values like the ID count for the DISTINCT column
+</p>
+<pre>
+SELECT COUNT(DISTINCT column_name)
+FROM table_name
+WHERE column_name BETWEEN value1 AND value2;
+</pre>

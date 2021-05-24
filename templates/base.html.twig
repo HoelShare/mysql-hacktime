@@ -31,7 +31,9 @@
                     <div class="sidebar">
                         {% block sidebar %}
                             {% block leaderboard %}
-                                {{ board.render(user)|raw }}
+                                {% if level is not defined or level > 0 %}
+                                    {{ board.render(user)|raw }}
+                                {% endif %}
                             {% endblock %}
                         {% endblock %}
                     </div>

@@ -22,7 +22,7 @@ final class Version20210523010330 extends AbstractMigration
 CREATE VIEW %s 
 AS
 SELECT 
-    id, tenant_id, created_at, JSON_UNQUOTE(data->"$.keyword") as `keyword`
+    id, tenant_id, created_at, data->>"$.keyword" as `keyword`
 FROM
     %s
 WHERE

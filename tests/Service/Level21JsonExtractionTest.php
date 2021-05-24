@@ -39,7 +39,7 @@ class Level21JsonExtractionTest extends KernelTestCase
 CREATE VIEW %s.%s
 AS
 SELECT 
-    id, tenant_id, created_at, JSON_UNQUOTE(data->"$.keyword") as `keyword`
+    id, tenant_id, created_at, data->>"$.keyword" as `keyword`
 FROM
     %s
 WHERE
@@ -67,7 +67,7 @@ SQL
 CREATE VIEW %s.%s
 AS
 SELECT 
-    id, created_at, JSON_UNQUOTE(data->"$.keyword") as `keyword`
+    id, created_at, data->>"$.keyword" as `keyword`
 FROM
     %s
 WHERE
@@ -97,7 +97,7 @@ SQL
 CREATE VIEW %s.%s
 AS
 SELECT 
-    id, tenant_id, created_at, JSON_UNQUOTE(data->"$.keyword") as `keyword`
+    id, tenant_id, created_at, data->>"$.keyword" as `keyword`
 FROM
     %s
 WHERE

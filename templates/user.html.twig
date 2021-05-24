@@ -10,9 +10,12 @@
 {% endblock %}
 
 {% block content %}
+    {% include 'level/level' ~ level|default(0) ~ '.html.twig' ignore missing %}
+
     {% if levelData is defined and levelData is not null and (levelData|length) > 0 %}
         {% set temp = levelData|first %}
         <h3>Example Rows of the new View</h3>
+        <p class="message">You can compare your results with the following table, but this table only consists of 10 Rows.</p>
         <div class="example-content">
             <table class="example-data">
                 <tr>
@@ -30,8 +33,6 @@
             </table>
         </div>
     {% endif %}
-
-    {% include 'level/level' ~ level|default(0) ~ '.html.twig' ignore missing %}
 {% endblock %}
 
 {% block sidebar %}

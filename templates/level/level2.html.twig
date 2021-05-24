@@ -4,3 +4,22 @@
     A subset may be defined for deletion using a condition, otherwise all records are removed.
     Some database management systems (DBMSs), like MySQL, allow deletion of rows from multiple tables with one DELETE statement (this is sometimes called multi-table DELETE).
 </p>
+<pre>
+DELETE FROM table_name WHERE condition;
+</pre>
+<div class="message message-hint">
+    <b>Note:</b> Be careful when deleting records in a table!
+    Notice the WHERE clause in the DELETE statement.
+    The WHERE clause specifies which record(s) should be deleted.
+    If you omit the WHERE clause, all records in the table will be deleted!
+</div>
+
+<p>
+    To delete data from multiple Tables, in MySQL it's possible to join Tables in a delete statement and remove rows from both.
+</p>
+<pre>
+DELETE table_one, table_two
+FROM table_one
+INNER JOIN table_two ON table_one.key = table_two.key
+WHERE condition;
+</pre>

@@ -1,7 +1,35 @@
-<h1>Dynamic Ultimo View</h1>
-<p>The Ultimo View is needed in the following levels, but this Dynamic View is more advanced than some of the following levels. If you get stuck ask for help :)</p>
-
-<h2>Recursive CTE</h2>
+<h2>Common Table Expression</h2>
 <p>
-
+    To specify common table expressions, use a WITH clause that has one or more comma-separated subclauses.
+    Each subclause provides a subquery that produces a result set, and associates a name with the subquery.
+    The following example defines CTEs named cte1 and cte2 in the WITH clause, and refers to them in the top-level
+    SELECT that follows the WITH clause:
 </p>
+<pre>
+WITH
+  cte1 AS (SELECT a, b FROM table1),
+  cte2 AS (SELECT c, d FROM table2)
+SELECT b, d FROM cte1 JOIN cte2
+WHERE cte1.a = cte2.c;
+</pre>
+
+<h2>Recursive Common Table Expressions</h2>
+<p>
+    A recursive common table expression is one having a subquery that refers to its own name.
+    For example:
+</p>
+<pre>
+WITH RECURSIVE cte (n) AS
+(
+  SELECT 1
+  UNION ALL
+  SELECT n + 1 FROM cte WHERE n < 5
+)
+SELECT * FROM cte;
+</pre>
+
+<div class="message message-hint">
+    The Ultimo View is needed in the following levels, but this Dynamic View is more advanced than some of the following
+    levels.
+    If you get stuck ask for help :)
+</div>

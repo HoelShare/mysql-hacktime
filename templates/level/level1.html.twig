@@ -1,27 +1,16 @@
-<h1>Configuration</h1>
+<h2>Update Command</h2>
 <p>
-    To connect to the database, use <a href="https://mysql.hacktime.de">PhpMyAdmin</a> with your user data. <br/>
-    On the other hand you can also connect with a tool of your choice! <br/>
-<dl>
-    <dt>Host</dt>
-    <dd>hacktime.de</dd>
-    <dt>Port</dt>
-    <dd>2705</dd>
-    {% if user is defined %}
-        <dt>User</dt>
-        <dd>{{ user }}</dd>
-    {% endif %}
-    {% if password is defined %}
-        <dt>Password</dt>
-        <dd>{{ password }}</dd>
-    {% endif %}
-</dl>
-</p>
-<p>
-    Open the database and take a look at the existing tables.
+    The UPDATE statement is used to modify the existing records in a table.
 </p>
 
-<h2>Insert Command</h2>
-<p>
-    A SQL INSERT statement adds one or more records to any single table in a relational database.
-</p>
+<pre>
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+</pre>
+
+<div class="message message-hint">
+    <b>Note:</b> Be careful when updating records in a table! Notice the WHERE clause in the UPDATE statement.
+    The WHERE clause specifies which record(s) that should be updated.
+    If you omit the WHERE clause, all records in the table will be updated!
+</div>
