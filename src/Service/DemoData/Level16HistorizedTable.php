@@ -53,31 +53,21 @@ SQL
                 <<<'SQL'
             CREATE OR REPLACE VIEW %s AS
         SELECT 
-        `%s`.`id` AS `id`,
-        `%s`.`name` AS `name`,
-        `%s`.`customer_number` AS `customer_number`,
-        `%s`.`creation_date` AS `creation_date`,
-        `%s`.`website` AS `website`,
-        `%s`.`banned` AS `banned`,
-        `%s`.`test` AS `test`,
-        `%s`.`notice` AS `notice`,
-        `%s`.`verified` AS `verified`,
-        `%s`.`net_promoter_score` AS `net_promoter_score`
+        `company`.`id` AS `id`,
+        `company`.`name` AS `name`,
+        `company`.`customer_number` AS `customer_number`,
+        `company`.`creation_date` AS `creation_date`,
+        `company`.`website` AS `website`,
+        `company`.`banned` AS `banned`,
+        `company`.`test` AS `test`,
+        `company`.`notice` AS `notice`,
+        `company`.`verified` AS `verified`,
+        `company`.`net_promoter_score` AS `net_promoter_score`
     FROM
-        `%s`
+        `%s` company
 SQL
                 ,
                 Level16::EXPECTED_VIEW_NAME,
-                Globals::TABLE_COMPANY,
-                Globals::TABLE_COMPANY,
-                Globals::TABLE_COMPANY,
-                Globals::TABLE_COMPANY,
-                Globals::TABLE_COMPANY,
-                Globals::TABLE_COMPANY,
-                Globals::TABLE_COMPANY,
-                Globals::TABLE_COMPANY,
-                Globals::TABLE_COMPANY,
-                Globals::TABLE_COMPANY,
                 Globals::TABLE_COMPANY,
             )
         );
@@ -95,15 +85,20 @@ SQL
     public function getDescription(): string
     {
         return sprintf(
-            'The company data is stored historically in the database, but for reporting we only need the current companies (current_flag = 1), and we should exclude all companies that have ever been a test company (test = 1).
-        For this use case a view (%s) was created, but id had some issues in filtering, please fix them.',
+            'The company data is historically stored in the database, but for reporting we need only the current companies (current_flag = 1), and we should exclude all companies that were ever a test company (test = 1).
+        A view (%s) was created for this use case, but it had some filtering issues, please fix them.',
             Level16::EXPECTED_VIEW_NAME
         );
     }
 
+    protected function getMainViewName(): string
+    {
+        return Level16::EXPECTED_VIEW_NAME;
+    }
+
     public function validate(Connection $connection, string $username): ?string
     {
-        return $this->validateView($connection, Level16::EXPECTED_VIEW_NAME, Level16::EXPECTED_VIEW_NAME);
+        return $this->validateView($connection, Level16::EXPECTED_VIEW_NAME);
     }
 
     public function reset(Connection $connection): void

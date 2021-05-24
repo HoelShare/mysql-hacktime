@@ -49,19 +49,23 @@ SQL
         );
     }
 
+    protected function getMainViewName(): string
+    {
+        return Level7::EXPECTED_VIEW_NAME;
+    }
+
     public function validate(Connection $connection, string $username): ?string
     {
         return $this->validateView(
             $connection,
             Level7::EXPECTED_VIEW_NAME,
-            Level7::EXPECTED_VIEW_NAME
         );
     }
 
     public function reset(Connection $connection): void
     {
         $connection->executeQuery(
-          <<<'SQL'
+            <<<'SQL'
             DROP TABLE IF EXISTS star_wars_ship_pilot;
             DROP TABLE IF EXISTS star_wars_star_ship;
             DROP TABLE IF EXISTS star_wars_character;

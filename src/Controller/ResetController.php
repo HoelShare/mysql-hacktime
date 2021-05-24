@@ -33,10 +33,10 @@ class ResetController extends AbstractController
             $level = $this->levelService->getCurrentLevel($user);
 
             return $this->redirectToRoute(
-                'renderLevel',
+                'showUserLevel',
                 [
                     'user' => $user,
-                    'level' => $level,
+                    'level' => $level->getLevel(),
                     'errorMessage' => 'Invalid Password, instance not reverted',
                 ]
             );
@@ -45,7 +45,7 @@ class ResetController extends AbstractController
         $this->userService->looseLevels($user);
         $this->userService->createInstance($user, $password);
 
-        return $this->redirectToRoute('renderLevel', ['user' => $user, 'password' => $password]);
+        return $this->redirectToRoute('showUserLevel', ['user' => $user, 'password' => $password]);
     }
 
     /**
@@ -54,11 +54,11 @@ class ResetController extends AbstractController
     public function resetLevel(string $user): Response
     {
         $level = $this->levelService->getCurrentLevel($user);
-        $this->demoDataService->resetLevel($user, $level);
+        $this->demoDataService->resetLevel($user, $level->getLevel());
 
         return $this->render(
             'user.html.twig',
-            ['user' => $user, 'level' => $level, 'successMessage' => 'Level reverted']
+            ['user' => $user, 'level' => $level->getLevel(), 'successMessage' => 'Level reverted']
         );
     }
 }

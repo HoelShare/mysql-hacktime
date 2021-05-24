@@ -31,9 +31,14 @@ class Level13OrderBy extends ViewCompareLevel
         );
     }
 
+    protected function getMainViewName(): string
+    {
+        return Level13::EXPECTED_VIEW_NAME;
+    }
+
     public function validate(Connection $connection, string $username): ?string
     {
-        return $this->validateView($connection, Level13::EXPECTED_VIEW_NAME, Level13::EXPECTED_VIEW_NAME);
+        return $this->validateView($connection, Level13::EXPECTED_VIEW_NAME);
     }
 
     public function reset(Connection $connection): void

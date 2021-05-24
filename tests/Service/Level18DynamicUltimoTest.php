@@ -28,7 +28,7 @@ class Level18DynamicUltimoTest extends KernelTestCase
         }
     }
 
-    public function testLevel16WrongData(): void
+    public function testLevel18WrongData(): void
     {
         $this->connection->executeQuery(
             sprintf(
@@ -48,10 +48,11 @@ SQL
             )
         );
 
-        $this->assertView();
+        $error = $this->levelService->checkMax(self::TEST_USER);
+        static::assertSame('The result seems to be wrong, did you filter the expected?', $error);
     }
 
-    public function testLevel16WrongColumns(): void
+    public function testLevel18WrongColumns(): void
     {
         $this->connection->executeQuery(
             sprintf(
@@ -71,10 +72,12 @@ SQL
             )
         );
 
-        $this->assertView();
+        $error = $this->levelService->checkMax(self::TEST_USER);
+        static::assertSame('Did you name the columns as expected?
+            ultimo,month_start,year_diff,month_diff,day_diff', $error);
     }
 
-    public function testLevel16Success(): void
+    public function testLevel18Success(): void
     {
         $this->connection->executeQuery(
             sprintf(

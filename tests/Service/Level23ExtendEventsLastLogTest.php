@@ -37,7 +37,7 @@ class Level23ExtendEventsLastLogTest extends KernelTestCase
         $this->connection->executeQuery(
             sprintf(
                 <<<'SQL'
-CREATE VIEW %s.%s AS
+CREATE DEFINER='%s'@'%s' VIEW %s.%s AS
 SELECT 
     event_log.*,
     to_days(created_at) - to_days(first_value(created_at) over w) as `days_since_first_log`,
@@ -48,6 +48,8 @@ FROM
     window w as (partition by tenant_id order by created_at)
 SQL
                 ,
+                self::TEST_USER,
+                '%',
                 self::TEST_USER,
                 Level22::EXPECTED_VIEW_NAME,
                 self::TEST_USER,
@@ -68,7 +70,7 @@ SQL
             sprintf(
                 <<<'SQL'
 
-CREATE VIEW %s.%s AS
+CREATE DEFINER='%s'@'%s' VIEW %s.%s AS
 SELECT 
     event_log.id,
     to_days(created_at) - to_days(first_value(created_at) over w) as `days_since_first_log`,
@@ -78,6 +80,8 @@ FROM
     window w as (partition by tenant_id order by created_at)
 SQL
                 ,
+                self::TEST_USER,
+                '%',
                 self::TEST_USER,
                 Level22::EXPECTED_VIEW_NAME,
                 self::TEST_USER,
@@ -98,7 +102,7 @@ SQL
         $this->connection->executeQuery(
             sprintf(
                 <<<'SQL'
-CREATE VIEW %s.%s AS
+CREATE DEFINER='%s'@'%s' VIEW %s.%s AS
 SELECT 
     event_log.*,
     TO_DAYS(created_at) - TO_DAYS((SELECT 
@@ -120,6 +124,8 @@ FROM
 ORDER BY tenant_id , days_since_first_log
 SQL
                 ,
+                self::TEST_USER,
+                '%',
                 self::TEST_USER,
                 Level22::EXPECTED_VIEW_NAME,
                 self::TEST_USER,
@@ -143,7 +149,7 @@ SQL
         $this->connection->executeQuery(
             sprintf(
                 <<<'SQL'
-CREATE VIEW %s.%s AS
+CREATE DEFINER='%s'@'%s' VIEW %s.%s AS
 SELECT 
     event_log.*,
     to_days(created_at) - to_days(first_value(created_at) over w) as `days_since_first_log`,
@@ -153,6 +159,8 @@ FROM
     window w as (partition by tenant_id order by created_at)
 SQL
                 ,
+                self::TEST_USER,
+                '%',
                 self::TEST_USER,
                 Level22::EXPECTED_VIEW_NAME,
                 self::TEST_USER,

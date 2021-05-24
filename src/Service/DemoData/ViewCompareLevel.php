@@ -19,8 +19,9 @@ abstract class ViewCompareLevel implements DemoDataInterface
     protected function validateView(
         Connection $connection,
         string $viewName,
-        string $tableNameToCompare
     ): ?string {
+        $tableNameToCompare = $this->getMainViewName();
+
         $baseType = $connection->fetchOne(
             'SELECT TABLE_TYPE from information_schema.tables where TABLE_SCHEMA = :userSchema and TABLE_NAME = :table',
             [
@@ -62,20 +63,22 @@ abstract class ViewCompareLevel implements DemoDataInterface
         Connection $connection,
         string $viewName,
     ): ?string {
-        $name = $this->rootConnection->fetchOne(
+        $definition = $connection->fetchOne(
             'SELECT view_definition FROM information_schema.views where VIEW_DEFINITION <> :empty and TABLE_SCHEMA = :schema and TABLE_NAME = :name',
             ['schema' => $connection->getDatabase(), 'name' => $viewName, 'empty' => '']
         );
 
-        if ($name === false) {
+        if ($definition === false) {
             return null;
         }
 
-        return $name;
+        return $definition;
     }
 
-    protected function checkResultSame(Connection $connection, string $viewName, string $mainView): ?string
+    protected function checkResultSame(Connection $connection, string $viewName): ?string
     {
+        $mainView = $this->getMainViewName();
+
         try {
             $condition = $this->rootConnection->fetchOne(
                 <<<'SQL'
@@ -120,7 +123,7 @@ SQL
                     $mainView,
                     $connection->getDatabase(),
                     $viewName,
-                    $condition
+                    $condition,
                 )
             );
             $countExpected = (int) $this->rootConnection->fetchOne(sprintf('SELECT count(0) FROM %s', $mainView));
@@ -156,4 +159,15 @@ SQL
             return $exception->getMessage();
         }
     }
+
+    public function getPreviewData(): ?array
+    {
+        try {
+            return $this->rootConnection->fetchAllAssociative(sprintf('SELECT * FROM %s LIMIT 20', $this->getMainViewName()));
+        } catch (Exception $exception) {
+            return null;
+        }
+    }
+
+    abstract protected function getMainViewName(): string;
 }

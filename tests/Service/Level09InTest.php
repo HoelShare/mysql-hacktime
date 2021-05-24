@@ -31,10 +31,12 @@ class Level09InTest extends KernelTestCase
         $this->connection->executeQuery(
             sprintf(
                 <<<'SQL'
-                CREATE OR REPLACE VIEW %s.%s as 
+                CREATE OR REPLACE DEFINER='%s'@'%s' VIEW %s.%s as 
                     SELECT * FROM %s.%s;
 SQL
                 ,
+                self::TEST_USER,
+                '%',
                 self::TEST_USER,
                 Level9::VIEW_NAME_MONDAY_WEDNESDAY_SATURDAY,
                 self::TEST_USER,
@@ -50,10 +52,12 @@ SQL
         $this->connection->executeQuery(
             sprintf(
                 <<<'SQL'
-                CREATE OR REPLACE VIEW %s.%s as 
+                CREATE OR REPLACE DEFINER='%s'@'%s' VIEW %s.%s as 
                     SELECT date FROM %s.%s WHERE weekday in (0, 2, 5);
 SQL
                 ,
+                self::TEST_USER,
+                '%',
                 self::TEST_USER,
                 Level9::VIEW_NAME_MONDAY_WEDNESDAY_SATURDAY,
                 self::TEST_USER,
@@ -69,10 +73,12 @@ SQL
         $this->connection->executeQuery(
             sprintf(
                 <<<'SQL'
-                CREATE OR REPLACE VIEW %s.%s as 
+                CREATE OR REPLACE DEFINER='%s'@'%s' VIEW %s.%s as 
                     SELECT * FROM %s.%s WHERE weekday = 0 or weekday = 2 or weekday = 5;
 SQL
                 ,
+                self::TEST_USER,
+                '%',
                 self::TEST_USER,
                 Level9::VIEW_NAME_MONDAY_WEDNESDAY_SATURDAY,
                 self::TEST_USER,
@@ -89,10 +95,12 @@ SQL
         $this->connection->executeQuery(
             sprintf(
                 <<<'SQL'
-                CREATE OR REPLACE VIEW %s.%s as 
+                CREATE OR REPLACE DEFINER='%s'@'%s' VIEW %s.%s as 
                     SELECT * FROM %s.%s WHERE weekday in (0, 2, 5);
 SQL
                 ,
+                self::TEST_USER,
+                '%',
                 self::TEST_USER,
                 Level9::VIEW_NAME_MONDAY_WEDNESDAY_SATURDAY,
                 self::TEST_USER,

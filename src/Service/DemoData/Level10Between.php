@@ -122,11 +122,15 @@ SQL
         );
     }
 
+    protected function getMainViewName(): string
+    {
+        return Level10::VIEW_NAME_MID_MARKET_ORDERS;
+    }
+
     public function validate(Connection $connection, string $username): ?string
     {
         $viewResponse = $this->validateView(
             $connection,
-            Level10::VIEW_NAME_MID_MARKET_ORDERS,
             Level10::VIEW_NAME_MID_MARKET_ORDERS,
         );
 

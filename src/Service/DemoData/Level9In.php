@@ -51,11 +51,15 @@ SQL
         );
     }
 
+    protected function getMainViewName(): string
+    {
+        return Level9::VIEW_NAME_MONDAY_WEDNESDAY_SATURDAY;
+    }
+
     public function validate(Connection $connection, string $username): ?string
     {
         $viewResponse = $this->validateView(
             $connection,
-            Level9::VIEW_NAME_MONDAY_WEDNESDAY_SATURDAY,
             Level9::VIEW_NAME_MONDAY_WEDNESDAY_SATURDAY,
         );
         if ($viewResponse !== null) {

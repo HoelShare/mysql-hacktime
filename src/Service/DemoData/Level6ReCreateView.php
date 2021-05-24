@@ -65,12 +65,16 @@ SQL
         );
     }
 
+    protected function getMainViewName(): string
+    {
+        return Level6::TABLE_NAME_TO_COMPARE;
+    }
+
     public function validate(Connection $connection, string $username): ?string
     {
         return $this->validateView(
             $connection,
             Level6::EXPECTED_VIEW_NAME,
-            Level6::TABLE_NAME_TO_COMPARE
         );
     }
 

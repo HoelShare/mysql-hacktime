@@ -35,11 +35,15 @@ class Level15SubSelectHaving extends ViewCompareLevel
         );
     }
 
+    protected function getMainViewName(): string
+    {
+        return Level15::EXPECTED_VIEW_NAME;
+    }
+
     public function validate(Connection $connection, string $username): ?string
     {
         $validation = $this->validateView(
             $connection,
-            Level15::EXPECTED_VIEW_NAME,
             Level15::EXPECTED_VIEW_NAME,
         );
         if ($validation !== null) {

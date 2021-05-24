@@ -23,7 +23,7 @@ class Level08LeftJoinTest extends KernelTestCase
                 sprintf(
                     'DROP VIEW IF EXISTS %s.%s;',
                     self::TEST_USER,
-                    Level8::EXPECTED_VIEW_NAME
+                    Level7::EXPECTED_VIEW_NAME
                 )
             );
         } catch (DriverException $exception) {
@@ -47,7 +47,7 @@ class Level08LeftJoinTest extends KernelTestCase
 SQL
                 ,
                 self::TEST_USER,
-                Level8::EXPECTED_VIEW_NAME,
+                Level7::EXPECTED_VIEW_NAME,
             )
         );
 
@@ -71,7 +71,7 @@ SQL
 SQL
                 ,
                 self::TEST_USER,
-                Level8::EXPECTED_VIEW_NAME
+                Level7::EXPECTED_VIEW_NAME
             )
         );
 
@@ -96,7 +96,7 @@ SQL
 SQL
                 ,
                 self::TEST_USER,
-                Level8::EXPECTED_VIEW_NAME,
+                Level7::EXPECTED_VIEW_NAME,
             )
         );
 

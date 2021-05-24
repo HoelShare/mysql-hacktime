@@ -13,6 +13,48 @@ class Level20UltimoJoinMulti extends ViewCompareLevel
 {
     public function create(Connection $connection): void
     {
+        $connection->executeQuery(
+            <<<'SQL'
+            CREATE TABLE company_business_relation(
+                id int not null,
+                name varchar(250) not null,
+                description tinytext null,
+                prio_sort int not null,
+                VALID_FROM_DTTM datetime not null ,
+                VALID_TO_DTTM datetime not null,
+                CURRENT_FLAG tinyint(1) not null,
+                primary key (id, VALID_FROM_DTTM),
+                unique key (id, VALID_TO_DTTM),
+                key (id, CURRENT_FLAG)
+            );
+
+            CREATE TABLE company_has_business_relation(
+                company_id int not null,
+                business_relation_id int not null,
+                VALID_FROM_DTTM datetime not null,
+                VALID_TO_DTTM datetime NOT null,
+                CURRENT_FLAG tinyint(1) NOT NULL,
+                primary key (company_id, business_relation_id, VALID_FROM_DTTM),
+                unique key (company_id, business_relation_id, VALID_TO_DTTM),
+                key (company_id, business_relation_id, CURRENT_FLAG)
+             );
+SQL
+        );
+
+        foreach (['company_business_relation', 'company_has_business_relation'] as $tableName) {
+            $this->rootConnection->executeQuery(
+                sprintf(
+                    <<<'SQL'
+        INSERT INTO %s.%s 
+SELECT * FROM %s
+SQL
+                    ,
+                    $connection->getDatabase(),
+                    $tableName,
+                    $tableName,
+                )
+            );
+        }
     }
 
     public function cleanUp(Connection $connection): void
@@ -33,9 +75,14 @@ class Level20UltimoJoinMulti extends ViewCompareLevel
         );
     }
 
+    protected function getMainViewName(): string
+    {
+        return Level20::VIEW_NAME_TO_COMPARE;
+    }
+
     public function validate(Connection $connection, string $username): ?string
     {
-        return $this->checkResultSame($connection, Level19::EXPECTED_VIEW_NAME, Level20::VIEW_NAME_TO_COMPARE);
+        return $this->checkResultSame($connection, Level19::EXPECTED_VIEW_NAME);
     }
 
     public function reset(Connection $connection): void

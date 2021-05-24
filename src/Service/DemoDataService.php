@@ -48,7 +48,7 @@ class DemoDataService
         return $success;
     }
 
-    private function getLevel(int $level): DemoDataInterface
+    public function getLevel(int $level): DemoDataInterface
     {
         foreach ($this->demoDataServices as $demoDataService) {
             if ($level === $demoDataService->getLevel()) {

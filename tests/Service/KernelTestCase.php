@@ -10,7 +10,7 @@ use Doctrine\DBAL\Connection;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase as SymfonyKernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class KernelTestCase extends SymfonyKernelTestCase
+abstract class KernelTestCase extends SymfonyKernelTestCase
 {
     public const TEST_USER = 'test';
     protected Connection $connection;
@@ -26,29 +26,6 @@ class KernelTestCase extends SymfonyKernelTestCase
         $this->containerInterface = self::$kernel->getContainer()->get('test.service_container');
         $this->connection = $this->containerInterface->get(Connection::class);
         $this->levelService = $this->containerInterface->get(LevelService::class);
-    }
-
-
-    public function testCheckALevelFails(): void
-    {
-        try {
-            $error = $this->levelService->checkMax(self::TEST_USER);
-            static::assertNotNull($error);
-        } catch (\Exception $exception) {
-            static::assertInstanceOf(LevelNotFoundException::class, $exception);
-        }
-    }
-
-    public function testCheckALevelFailsMultipleTimes(): void
-    {
-        try {
-            static::assertNotNull($this->levelService->checkMax(self::TEST_USER));
-            static::assertNotNull($this->levelService->checkMax(self::TEST_USER));
-            static::assertNotNull($this->levelService->checkMax(self::TEST_USER));
-            static::assertNotNull($this->levelService->checkMax(self::TEST_USER));
-        } catch (\Exception $exception) {
-            static::assertInstanceOf(LevelNotFoundException::class, $exception);
-        }
     }
 
     protected function assertView(): void

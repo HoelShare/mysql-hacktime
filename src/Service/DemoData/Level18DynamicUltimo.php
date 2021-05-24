@@ -74,9 +74,14 @@ SQL
         The Ultimo View is needed in the following levels, but this Dynamic View is more advanced than some of the following levels. If you get stuck ask for help :)';
     }
 
+    protected function getMainViewName(): string
+    {
+        return Globals::VIEW_NAME_ULTIMO;
+    }
+
     public function validate(Connection $connection, string $username): ?string
     {
-        return $this->validateView($connection, Globals::VIEW_NAME_ULTIMO, Globals::VIEW_NAME_ULTIMO);
+        return $this->checkResultSame($connection, Globals::VIEW_NAME_ULTIMO);
     }
 
     public function reset(Connection $connection): void

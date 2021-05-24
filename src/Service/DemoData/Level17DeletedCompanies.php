@@ -32,9 +32,14 @@ class Level17DeletedCompanies extends ViewCompareLevel
         );
     }
 
+    protected function getMainViewName(): string
+    {
+        return Level17::VIEW_NAME_TO_COMPARE;
+    }
+
     public function validate(Connection $connection, string $username): ?string
     {
-        return $this->validateView($connection, Level16::EXPECTED_VIEW_NAME, Level17::VIEW_NAME_TO_COMPARE);
+        return $this->validateView($connection, Level16::EXPECTED_VIEW_NAME);
     }
 
     public function reset(Connection $connection): void

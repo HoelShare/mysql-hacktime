@@ -50,19 +50,23 @@ CREATE VIEW %s.%s AS
         `company`.`net_promoter_score` AS `net_promoter_score`,
         `company_business_relation`.`name` as `business_relation_name`
     FROM
-        %s company
+        %s.%s company
             INNER JOIN
-        %s ultimo ON ultimo.ultimo BETWEEN company.valid_from_dttm AND company.valid_to_dttm
-            LEFT JOIN company_has_business_relation on company_has_business_relation.company_id = company.id and ultimo.ultimo between company_has_business_relation.valid_from_dttm and company_has_business_relation.valid_to_dttm
-            LEFT JOIN company_business_relation on company_business_relation.id = company_has_business_relation.business_relation_id and ultimo.ultimo between company_business_relation.valid_from_dttm and company_business_relation.valid_to_dttm
+        %s.%s ultimo ON ultimo.ultimo BETWEEN company.valid_from_dttm AND company.valid_to_dttm
+            LEFT JOIN %s.company_has_business_relation on company_has_business_relation.company_id = company.id and ultimo.ultimo between company_has_business_relation.valid_from_dttm and company_has_business_relation.valid_to_dttm
+            LEFT JOIN %s.company_business_relation on company_business_relation.id = company_has_business_relation.business_relation_id and ultimo.ultimo between company_business_relation.valid_from_dttm and company_business_relation.valid_to_dttm
     WHERE
         ultimo.month_diff BETWEEN - 6 AND 0;
 SQL
                 ,
                 self::TEST_USER,
                 Level19::EXPECTED_VIEW_NAME,
+                self::TEST_USER,
                 Globals::TABLE_COMPANY,
+                self::TEST_USER,
                 Globals::VIEW_NAME_ULTIMO,
+                self::TEST_USER,
+                self::TEST_USER,
             )
         );
 
@@ -83,19 +87,23 @@ CREATE VIEW %s.%s AS
         ultimo.ultimo,
         `company`.`id` AS `id`
     FROM
-        %s company
+        %s.%s company
             INNER JOIN
-        %s ultimo ON ultimo.ultimo BETWEEN company.valid_from_dttm AND company.valid_to_dttm
-            LEFT JOIN company_has_business_relation on company_has_business_relation.company_id = company.id and ultimo.ultimo between company_has_business_relation.valid_from_dttm and company_has_business_relation.valid_to_dttm
-            LEFT JOIN company_business_relation on company_business_relation.id = company_has_business_relation.business_relation_id and ultimo.ultimo between company_business_relation.valid_from_dttm and company_business_relation.valid_to_dttm
+        %s.%s ultimo ON ultimo.ultimo BETWEEN company.valid_from_dttm AND company.valid_to_dttm
+            LEFT JOIN %s.company_has_business_relation on company_has_business_relation.company_id = company.id and ultimo.ultimo between company_has_business_relation.valid_from_dttm and company_has_business_relation.valid_to_dttm
+            LEFT JOIN %s.company_business_relation on company_business_relation.id = company_has_business_relation.business_relation_id and ultimo.ultimo between company_business_relation.valid_from_dttm and company_business_relation.valid_to_dttm
     WHERE
         ultimo.month_diff BETWEEN - 12 AND 0;
 SQL
                 ,
                 self::TEST_USER,
                 Level19::EXPECTED_VIEW_NAME,
+                self::TEST_USER,
                 Globals::TABLE_COMPANY,
+                self::TEST_USER,
                 Globals::VIEW_NAME_ULTIMO,
+                self::TEST_USER,
+                self::TEST_USER,
             )
         );
 
@@ -128,19 +136,23 @@ CREATE VIEW %s.%s AS
         `company`.`net_promoter_score` AS `net_promoter_score`,
         `company_business_relation`.`name` as `business_relation_name`
     FROM
-        %s company
+        %s.%s company
             INNER JOIN
-        %s ultimo ON ultimo.ultimo BETWEEN company.valid_from_dttm AND company.valid_to_dttm
-            LEFT JOIN company_has_business_relation on company_has_business_relation.company_id = company.id and ultimo.ultimo between company_has_business_relation.valid_from_dttm and company_has_business_relation.valid_to_dttm
-            LEFT JOIN company_business_relation on company_business_relation.id = company_has_business_relation.business_relation_id and ultimo.ultimo between company_business_relation.valid_from_dttm and company_business_relation.valid_to_dttm
+        %s.%s ultimo ON ultimo.ultimo BETWEEN company.valid_from_dttm AND company.valid_to_dttm
+            LEFT JOIN %s.company_has_business_relation on company_has_business_relation.company_id = company.id and ultimo.ultimo between company_has_business_relation.valid_from_dttm and company_has_business_relation.valid_to_dttm
+            LEFT JOIN %s.company_business_relation on company_business_relation.id = company_has_business_relation.business_relation_id and ultimo.ultimo between company_business_relation.valid_from_dttm and company_business_relation.valid_to_dttm
     WHERE
         ultimo.month_diff BETWEEN - 12 AND 0;
 SQL
                 ,
                 self::TEST_USER,
                 Level19::EXPECTED_VIEW_NAME,
+                self::TEST_USER,
                 Globals::TABLE_COMPANY,
+                self::TEST_USER,
                 Globals::VIEW_NAME_ULTIMO,
+                self::TEST_USER,
+                self::TEST_USER,
             )
         );
 

@@ -33,9 +33,14 @@ class Level22ExtendedEventLog extends ViewCompareLevel
         );
     }
 
+    protected function getMainViewName(): string
+    {
+        return Level22::EXPECTED_VIEW_NAME;
+    }
+
     public function validate(Connection $connection, string $username): ?string
     {
-        return $this->checkResultSame($connection, Level22::EXPECTED_VIEW_NAME, Level22::EXPECTED_VIEW_NAME);
+        return $this->checkResultSame($connection, Level22::EXPECTED_VIEW_NAME);
     }
 
     public function reset(Connection $connection): void

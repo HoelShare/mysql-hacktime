@@ -33,10 +33,12 @@ class Level10BetweenTest extends KernelTestCase
         $this->connection->executeQuery(
             sprintf(
                 <<<'SQL'
-                CREATE OR REPLACE VIEW %s.%s as 
+                CREATE OR REPLACE DEFINER='%s'@'%s' VIEW %s.%s as 
                     SELECT * FROM %s.`%s`;
 SQL
                 ,
+                self::TEST_USER,
+                '%',
                 self::TEST_USER,
                 Level10::VIEW_NAME_MID_MARKET_ORDERS,
                 self::TEST_USER,
@@ -52,10 +54,12 @@ SQL
         $this->connection->executeQuery(
             sprintf(
                 <<<'SQL'
-                CREATE OR REPLACE VIEW %s.%s as 
+                CREATE OR REPLACE DEFINER='%s'@'%s' VIEW %s.%s as 
                     SELECT id, tenant_id FROM %s.`%s` WHERE amount_total BETWEEN 150 and 500;
 SQL
                 ,
+                self::TEST_USER,
+                '%',
                 self::TEST_USER,
                 Level10::VIEW_NAME_MID_MARKET_ORDERS,
                 self::TEST_USER,
@@ -71,10 +75,12 @@ SQL
         $this->connection->executeQuery(
             sprintf(
                 <<<'SQL'
-                CREATE OR REPLACE VIEW %s.%s as 
+                CREATE OR REPLACE DEFINER='%s'@'%s' VIEW %s.%s as 
                     SELECT * FROM %s.`%s` WHERE amount_total >= 150 and amount_total <= 500;
 SQL
                 ,
+                self::TEST_USER,
+                '%',
                 self::TEST_USER,
                 Level10::VIEW_NAME_MID_MARKET_ORDERS,
                 self::TEST_USER,
@@ -91,10 +97,12 @@ SQL
         $this->connection->executeQuery(
             sprintf(
                 <<<'SQL'
-                CREATE OR REPLACE VIEW %s.%s as 
+                CREATE OR REPLACE DEFINER='%s'@'%s' VIEW %s.%s as 
                     SELECT * FROM %s.`%s` WHERE amount_total between 150 and 500;
 SQL
                 ,
+                self::TEST_USER,
+                '%',
                 self::TEST_USER,
                 Level10::VIEW_NAME_MID_MARKET_ORDERS,
                 self::TEST_USER,

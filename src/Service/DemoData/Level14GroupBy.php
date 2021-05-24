@@ -33,11 +33,15 @@ class Level14GroupBy extends ViewCompareLevel
         );
     }
 
+    protected function getMainViewName(): string
+    {
+        return Level14::EXPECTED_VIEW_NAME;
+    }
+
     public function validate(Connection $connection, string $username): ?string
     {
         return $this->validateView(
             $connection,
-            Level14::EXPECTED_VIEW_NAME,
             Level14::EXPECTED_VIEW_NAME,
         );
     }

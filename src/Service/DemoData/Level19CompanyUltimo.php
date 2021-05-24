@@ -34,9 +34,14 @@ class Level19CompanyUltimo extends ViewCompareLevel
         );
     }
 
+    protected function getMainViewName(): string
+    {
+        return Level19::VIEW_NAME_TO_COMPARE;
+    }
+
     public function validate(Connection $connection, string $username): ?string
     {
-        return $this->checkResultSame($connection, Level19::EXPECTED_VIEW_NAME, Level19::VIEW_NAME_TO_COMPARE);
+        return $this->checkResultSame($connection, Level19::EXPECTED_VIEW_NAME);
     }
 
     public function reset(Connection $connection): void

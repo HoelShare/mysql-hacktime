@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Exception\UserNotFoundException;
+use App\Service\DemoData\DemoDataInterface;
 use Doctrine\DBAL\Connection;
 
 class LevelService
@@ -18,9 +19,9 @@ class LevelService
     {
         $currentLevel = $this->getCurrentLevel($username);
 
-        $success = $this->demoDataService->checkLevel($username, $currentLevel);
+        $success = $this->demoDataService->checkLevel($username, $currentLevel->getLevel());
 
-        $this->logTry($username, $currentLevel, $success === null);
+        $this->logTry($username, $currentLevel->getLevel(), $success === null);
 
         return $success;
     }
@@ -37,7 +38,7 @@ class LevelService
         }
     }
 
-    public function getCurrentLevel(string $username): int
+    public function getCurrentLevel(string $username): DemoDataInterface
     {
         $this->checkUserExists($username);
         $level = $this->connection->fetchOne(
@@ -45,10 +46,10 @@ class LevelService
             ['username' => $username]
         );
         if ($level === false || $level === null) {
-            return 0;
+            return $this->demoDataService->getLevel(0);
         }
 
-        return 1 + (int) $level;
+        return $this->demoDataService->getLevel(1 + (int) $level);
     }
 
     private function logTry(string $username, int $currentLevel, bool $success): void

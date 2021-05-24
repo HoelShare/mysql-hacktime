@@ -19,7 +19,7 @@ class LeaderBoardService
     public function render(string $user): string
     {
         $level = $this->levelService->getCurrentLevel($user);
-        $leaderboard = $this->getLeaderBoard($user, $level);
+        $leaderboard = $this->getLeaderBoard($user, $level->getLevel());
 
         return $this->twig->render('leaderboard.html.twig', ['leaderBoard' => $leaderboard, 'user' => $user]);
     }
