@@ -67,11 +67,15 @@ SQL
 
     public function getDescription(): string
     {
-        return 'Updating the ultimo view is an unnecessary recurring task. Build a dynamic Ultimo (Name: ultimo) view. Beside the ultimo column it is useful to have a year_diff, month_diff, day_diff column, which contain the offset to the current date. So we can Filter in Future Level on [month_diff > -36].
+        return sprintf(
+            'Updating the ultimo view is an unnecessary recurring task. Build a dynamic Ultimo (Name: %s) view. Beside the ultimo column it is useful to have a year_diff, month_diff, day_diff column, which contain the offset to the current date. So we can Filter in Future Level on [month_diff > -36].
         Hint: To check your results and the structure of the view, I\'ve created a example Table which contain the expected first and last entry.
-        Timerange: 5 Years in Back (+1 Month?) - 1 Year in Future
+        Timerange: 6 Years in Back (+1 Month?) - 1 Year in Future (see: %s)
         
-        The Ultimo View is needed in the following levels, but this Dynamic View is more advanced than some of the following levels. If you get stuck ask for help :)';
+        The Ultimo View is needed in the following levels, but this Dynamic View is more advanced than some of the following levels. If you get stuck ask for help :)',
+            Globals::VIEW_NAME_ULTIMO,
+            self::TABLE_NAME
+        );
     }
 
     protected function getMainViewName(): string
