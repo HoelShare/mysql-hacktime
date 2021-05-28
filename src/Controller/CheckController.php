@@ -25,6 +25,7 @@ class CheckController extends AbstractController
      */
     public function check(string $user, Request $request): Response
     {
+        $user = strtolower($user);
         $check = $this->levelService->checkMax($user);
 
         $currentLevel = $this->levelService->getCurrentLevel($user);
@@ -45,6 +46,7 @@ class CheckController extends AbstractController
      */
     public function showUserPage(string $user, Request $request): Response
     {
+        $user = strtolower($user);
         $currentLevel = $this->levelService->getCurrentLevel($user);
 
         $params = ['user' => $user, 'level' => $currentLevel->getLevel()];

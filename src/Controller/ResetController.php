@@ -26,6 +26,7 @@ class ResetController extends AbstractController
      */
     public function resetInstance(Request $request, string $user): Response
     {
+        $user = strtolower($user);
         $password = $request->get('password');
         $isValid = $this->userService->isValid($user, $password);
 
@@ -53,6 +54,8 @@ class ResetController extends AbstractController
      */
     public function resetLevel(string $user): Response
     {
+        $user = strtolower($user);
+
         $level = $this->levelService->getCurrentLevel($user);
         $this->demoDataService->resetLevel($user, $level->getLevel());
 

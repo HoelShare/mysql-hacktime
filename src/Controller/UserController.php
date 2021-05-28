@@ -25,6 +25,7 @@ class UserController extends AbstractController
     public function createUser(Request $request): Response
     {
         $userName = (string) $request->request->get('username');
+        $user = strtolower($userName);
         $password = $this->userService->createUser($userName);
 
         return $this->redirectToRoute('showUserLevel', ['user' => $userName, 'password' => $password]);
