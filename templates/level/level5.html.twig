@@ -18,11 +18,11 @@ WHERE condition;
 </div>
 
 <p>
-    If the View already exists, it easy to replace, just add "OR RECREATE" after the "CREATE"
+    If the View already exists, it easy to replace, just add "OR REPLACE" after the "CREATE"
 </p>
 
 <pre>
-CREATE OR RECREATE VIEW view_name AS
+CREATE OR REPLACE VIEW view_name AS
 SELECT column1, column2, column3, ...
 FROM table_name
 WHERE condition;
