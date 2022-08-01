@@ -7,16 +7,20 @@ namespace App\Service;
 use App\Exception\InvalidUsernameException;
 use App\Exception\UserAlreadyExists;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use function in_array;
 use function mb_strlen;
 
 class UserService
 {
     private const USERNAME_BLACKLIST = ['settings', 'root', 'sys', 'user', 'order', 'information_schema'];
+    public const TEST_USER = 'test';
 
     public function __construct(
         private Connection $connection,
         private DemoDataService $demoDataService,
+        #[Autowire('%kernel.environment%')]
+        private string $appEnv,
     ) {
     }
 
@@ -74,7 +78,8 @@ SQL
             throw new InvalidUsernameException(sprintf('Username (%s) contains invalid characters', $userName));
         }
 
-        if (in_array($userName, self::USERNAME_BLACKLIST, true)) {
+        if (($userName === self::TEST_USER && $this->appEnv !== 'test')
+            || in_array($userName, self::USERNAME_BLACKLIST, true) ) {
             throw new InvalidUsernameException(sprintf('Username (%s) is on blacklist', $userName));
         }
 

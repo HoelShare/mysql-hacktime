@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class KernelTestCase extends SymfonyKernelTestCase
 {
-    public const TEST_USER = 'test';
+    public const TEST_USER = UserService::TEST_USER;
     protected Connection $connection;
     protected ContainerInterface $containerInterface;
     protected LevelService $levelService;
