@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Exception\InvalidUsernameException;
+use App\Exception\UserAlreadyExists;
 use Doctrine\DBAL\Connection;
 use function in_array;
 use function mb_strlen;
@@ -83,7 +84,7 @@ SQL
         );
 
         if ($user !== false) {
-            throw new InvalidUsernameException(sprintf('Username (%s) already exists', $userName));
+            throw new UserAlreadyExists($userName);
         }
     }
 

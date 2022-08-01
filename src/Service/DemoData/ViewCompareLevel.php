@@ -87,7 +87,7 @@ SELECT
         column_name,
         ' <=> ',
         ' dst.',
-        column_name, ') '
+        column_name, ') ' ORDER BY ORDINAL_POSITION
         SEPARATOR ' AND ')
 FROM
     information_schema.columns
@@ -110,7 +110,7 @@ WHERE
         AND table_name = :tableName
         AND (is_nullable = 'NO'
         OR ordinal_position = 1)
-ORDER BY is_nullable
+ORDER BY ordinal_position, is_nullable
 SQL
                 ,
                 ['tableName' => $mainView, 'mainSchema' => $this->rootConnection->getDatabase()]
@@ -139,7 +139,7 @@ SQL
             $fieldNames = $this->rootConnection->fetchOne(
                 <<<'SQL'
 SELECT 
-    GROUP_CONCAT(column_name)
+    GROUP_CONCAT(column_name ORDER BY ORDINAL_POSITION)
 FROM
     information_schema.columns
 WHERE

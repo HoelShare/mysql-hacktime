@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Exception\UserAlreadyExists;
 use App\Service\JokeService;
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +27,12 @@ class UserController extends AbstractController
     {
         $userName = (string) $request->request->get('username');
         $user = strtolower($userName);
-        $password = $this->userService->createUser($userName);
+
+        try {
+            $password = $this->userService->createUser($user);
+        } catch (UserAlreadyExists $alreadyExists) {
+            return $this->redirectToRoute('showUserLevel', ['user' => $alreadyExists->getUsername()]);
+        }
 
         return $this->redirectToRoute('showUserLevel', ['user' => $userName, 'password' => $password]);
     }
