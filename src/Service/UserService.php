@@ -13,7 +13,7 @@ use function mb_strlen;
 
 class UserService
 {
-    private const USERNAME_BLACKLIST = ['settings', 'root', 'sys', 'user', 'order', 'information_schema'];
+    private const USERNAME_BLACKLIST = ['settings', 'root', 'sys', 'user', 'order', 'information_schema', 'mysql'];
     public const TEST_USER = 'test';
 
     public function __construct(
