@@ -6,7 +6,7 @@
     <dt>Host</dt>
     <dd>{{ app.request.server.get('DB_HOST_DOMAIN') }}</dd>
     <dt>Port</dt>
-    <dd>12705</dd>
+    <dd>{{ app.request.server.get('DB_PORT') }}</dd>
     {% if user is defined %}
         <dt>User</dt>
         <dd>{{ user }}</dd>
