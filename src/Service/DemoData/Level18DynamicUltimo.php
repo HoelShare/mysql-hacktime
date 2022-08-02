@@ -72,7 +72,7 @@ SQL
         Hint: To check your results and the structure of the view, I\'ve created a example Table which contain the expected first and last entry.
         Timerange: 6 Years in Back (+1 Month?) - 1 Year in Future (see: %s)
         
-        The Ultimo View is needed in the following levels, but this Dynamic View is more advanced than some of the following levels. If you get stuck ask for help :)',
+        The Ultimo View is needed in the following levels.',
             Globals::VIEW_NAME_ULTIMO,
             self::TABLE_NAME
         );

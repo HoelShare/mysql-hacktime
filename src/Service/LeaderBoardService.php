@@ -18,35 +18,42 @@ class LeaderBoardService
 
     public function render(?string $user, ?int $level = null): string
     {
-        $showAll = false;
+        $showAll = $level !== null;
         if ($level === null) {
             $level = $this->levelService->getCurrentLevel($user)->getLevel() - 1;
-            $showAll = true;
         }
 
         $leaderboard = $this->getLeaderBoard($user, $level, $showAll);
 
-        return $this->twig->render('leaderboard.html.twig', ['leaderBoard' => $leaderboard, 'user' => $user]);
+        return $this->twig->render('leaderboard.html.twig', ['leaderBoard' => $leaderboard, 'user' => $user, 'showAll' => $showAll]);
     }
 
     private function getLeaderBoard(?string $user, int $level, bool $showAll): array
     {
         return $this->connection->fetchAllAssociative(
             <<<'SQL'
-SELECT * FROM (
-select  rank() over (order by  timestampdiff(second, start, end)) as `rank`, user, timestampdiff(second, start, end) / 60 as `minutes` from (
-SELECT 
-    user,
-        FIRST_VALUE(created_at) over w as `start`, 
-        LAST_VALUE(created_at) over w as `end`,
-        last_value(success) over w = 1 as `lastTry`,
-        last_value(`number`) over w as `lastLevel`
-FROM
-    solution_try
-    where user <> :testUser
-WINDOW w as (partition by user order by id)) a
-where lastLevel = :userLevel and lastTry = 1) userRanked
-where (`rank` <= 10 or `user` = :user or :showAll = 1) 
+SELECT *
+FROM (SELECT RANK() OVER (ORDER BY TIMESTAMPDIFF(SECOND, start, end)) AS `totalRank`,
+             RANK() OVER (ORDER BY TIMESTAMPDIFF(SECOND, lastSuccess, created_at)) AS `rankLastLevel`,
+             user,
+             TIMESTAMPDIFF(SECOND, start, end) / 60                   AS totalMinutes,
+             TIMESTAMPDIFF(SECOND, lastSuccess, created_at) /
+             60                                                       AS lastLevelInMinutes
+      FROM (SELECT user,
+                   created_at,
+                   FIRST_VALUE(created_at) OVER w           AS start,
+                   LAST_VALUE(created_at) OVER w            AS end,
+                   LAST_VALUE(success) OVER w = 1           AS lastTry,
+                   LAST_VALUE(number) OVER w                AS lastLevel,
+                   COALESCE(MAX(CASE WHEN success THEN created_at END)
+                                OVER (PARTITION BY user ORDER BY created_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING),
+                            FIRST_VALUE(created_at) OVER w) AS lastSuccess
+            FROM solution_try
+            WHERE user <> :testUser
+                WINDOW w AS (PARTITION BY user ORDER BY id)) a
+      WHERE lastLevel = :userLevel
+        AND lastTry = 1) userRanked
+WHERE (`rankLastLevel` <= 10 OR user = :user OR :showAll = 1)
 SQL
             ,
             [

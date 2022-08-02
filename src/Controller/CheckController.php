@@ -28,8 +28,7 @@ class CheckController extends AbstractController
         $user = strtolower($user);
         $check = $this->levelService->checkMax($user);
 
-        $currentLevel = $this->levelService->getCurrentLevel($user);
-        $request->request->set('level', $currentLevel);
+        $this->levelService->getCurrentLevel($user);
 
         if ($check === null) {
             $request->request->set('successMessage', 'Level completed!');
