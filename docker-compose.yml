@@ -8,8 +8,6 @@ services:
     working_dir: /app
     volumes:
     - .:/app
-    ports:
-      - 1905:80
     links:
       - mysql:mysql
 
@@ -20,16 +18,12 @@ services:
     environment:
       MYSQL_DATABASE: settings
       MYSQL_ROOT_HOST: "%"
-    ports:
-      - 12705:3306
     restart: always
     command: --sql-mode="IGNORE_SPACE,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION" --group_concat_max_len=10000 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --bind-address=0.0.0.0
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     restart: always
-    ports:
-      - 2005:80
     environment:
       PMA_HOST: mysql
     depends_on:
